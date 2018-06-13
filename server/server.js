@@ -9,12 +9,14 @@ app.get('/', function(req, res){
 var room;
 io.on('connection', function(socket){
   console.log('user connected');
-  socket.on('join',function(roome){
+  socket.on('join',function(roome,proome){
+  	socket.leave(proome);
   	socket.join(roome);
   	room=roome;
-  })
-  socket.on('chat message', function(msg){
-    io.sockets.in(room).emit('chat message', msg.msg);
+  });
+  socket.on('chat message', function(msg,roome){
+  	console.log(roome+"|||"+msg);
+    io.sockets.in(roome).emit('chat message', msg);
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');

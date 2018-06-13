@@ -3,15 +3,17 @@ var app=angular.module('myApp',[]);
 app.controller('mainController',['$scope',function($scope){
  var socket = io.connect();
  var roome="Sudhanshu";
+ var preroome;
  $scope.submit =function(response){
+ 	preroome=roome;
  	roome=response;
  	$scope.roome=roome;
- 	socket.emit('join',roome);
+ 	socket.emit('join',roome,preroome);
  }
 
  $scope.send = function(){
-	var msg={msg:$scope.message , room:roome};
-	socket.emit('chat message', msg);
+	var msg=$scope.message;
+	socket.emit('chat message', msg,roome);
 	$scope.message="";
 }
  socket.on('chat message', function(msg){
