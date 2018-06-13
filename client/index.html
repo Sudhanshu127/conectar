@@ -12,12 +12,13 @@
   <body ng-controller="mainController">
     <div class="split left">
       <div class="centered">
-        <button ng-click="submit("Sudhanshu")">Sudhanshu</button><br>
-        <button ng-click="submit("Vishal")">Vishal</button><br>
-        <button ng-click="submit("Vipul")">Vipul</button><br>
-        <button ng-click="submit("Ayush")">Ayush</button><br>
-        <button ng-click="submit("Jayesh")">Jayesh</button><br>
-        <button ng-click="submit("group")">group</button><br>
+        <input type="radio" ng-model='room' ng-value='"Sudhanshu"' name="rdoResult">Sudhanshu</button><br>
+        <input type="radio" ng-model='room' ng-value='"Vishal"' name="rdoResult">Vishal</button><br>
+        <input type="radio" ng-model='room' ng-value='"Vipul"' name="rdoResult">Vipul</button><br>
+        <input type="radio" ng-model='room' ng-value='"Ayush"' name="rdoResult">Ayush</button><br>
+        <input type="radio" ng-model='room' ng-value='"Jayesh"' name="rdoResult">Jayesh</button><br>
+        <input type="radio" ng-model='room' ng-value='"group"' name="rdoResult">group</button><br>
+        <button ng-click="submit(room)">Submit</button><br>
       </div>
     </div>
     <div class="split right">
