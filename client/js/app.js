@@ -4,6 +4,10 @@ app.controller('mainController',['$scope',function($scope){
  var socket = io.connect();
  var roome="Sudhanshu";
  var preroome;
+ $scope.submituser=function(response){
+ 	socket.emit('user',response);
+ 	$scope.You=response;
+ }
  $scope.submit =function(response){
  	preroome=roome;
  	roome=response;
@@ -16,9 +20,9 @@ app.controller('mainController',['$scope',function($scope){
 	socket.emit('chat message', msg,roome);
 	$scope.message="";
 }
- socket.on('chat message', function(msg){
+ socket.on('chat message', function(user,msg){
   var li=document.createElement("li");
-  li.appendChild(document.createTextNode(msg));
+  li.appendChild(document.createTextNode(user+":"+msg));
   document.getElementById("messages").appendChild(li);
  });
 }]);

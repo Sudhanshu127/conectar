@@ -12,7 +12,15 @@
   <body ng-controller="mainController">
     <div class="split left">
       <div class="centered">
-        <input type="number" ng-model="userno"><br>
+        Who are you?
+        <input type="radio" ng-model='room1' ng-value='"Sudhanshu"' name="rdoResult">Sudhanshu</button><br>
+        <input type="radio" ng-model='room1' ng-value='"Vishal"' name="rdoResult">Vishal</button><br>
+        <input type="radio" ng-model='room1' ng-value='"Vipul"' name="rdoResult">Vipul</button><br>
+        <input type="radio" ng-model='room1' ng-value='"Ayush"' name="rdoResult">Ayush</button><br>
+        <input type="radio" ng-model='room1' ng-value='"Jayesh"' name="rdoResult">Jayesh</button><br>
+        <input type="radio" ng-model='room1' ng-value='"group"' name="rdoResult">group</button><br>
+        <button ng-click="submituser(room1)">Submit</button><br>
+        Whom do you want to talk to?
         <input type="radio" ng-model='room' ng-value='"Sudhanshu"' name="rdoResult">Sudhanshu</button><br>
         <input type="radio" ng-model='room' ng-value='"Vishal"' name="rdoResult">Vishal</button><br>
         <input type="radio" ng-model='room' ng-value='"Vipul"' name="rdoResult">Vipul</button><br>
@@ -24,7 +32,7 @@
     </div>
     <div class="split right">
       <div class="bottom">
-      You are taking with {{roome}}<br>
+      {{You}} are taking with {{roome}}<br>
       <ul id="messages"></ul>
       <center>
       <div>
