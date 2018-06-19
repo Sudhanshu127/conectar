@@ -10,7 +10,7 @@ app.get('/', function(req, res){
 var MongoClient =require('mongodb').MongoClient;
 const assert = require('assert');
 var ip="localhost:27017/";
-var sudhanshu="group";
+//var sudhanshu="group";
 var sudhanshudatabase;
 var friend;
 
@@ -19,16 +19,13 @@ var friend;
 io.on('connection', function(socket){
   console.log('user connected');
 ///////////////////////////////////////
-	socket.on('user',function(user){
-		sudhanshu=user;
-	});
-
 
 /////////////////////////////////////
 
-  socket.on('join',function(roome,proome){
+  socket.on('join',function(roome,proome,user){
   	socket.leave(proome);
-  	socket.join(roome);
+  	socket.join(user+roome);
+  	var sudhanshu=user;
   	var url = "mongodb://"+ip+sudhanshu;
 	MongoClient.connect(url, function(err, client) {
 		if (err){
@@ -41,8 +38,8 @@ io.on('connection', function(socket){
 		  	assert.equal(err,null);
 		  	for(var x of docs)
 		  	{
-		  		//different but in here
-    			io.sockets.in(roome).emit('chat message',x.name, x.msg);
+		  		//different bug in here
+    			io.sockets.in(user+roome).emit('new chat message',x.name, x.msg);
    		  	}
 		  });
 		  client.close();
@@ -50,8 +47,9 @@ io.on('connection', function(socket){
 
 
    });
-  socket.on('chat message', function(msg,roome){
+  socket.on('chat message', function(msg,roome,user){
   	console.log(roome+"|||"+msg);
+  	var sudhanshu=user;
   	var url = "mongodb://"+ip+sudhanshu;
 	MongoClient.connect(url, function(err, client) {
 		if (err){
@@ -77,7 +75,8 @@ io.on('connection', function(socket){
   		  client.close();
 	});
 	//bug over here
-    io.sockets.in(roome).emit('chat message',sudhanshu, msg);
+    io.sockets.in(user+roome).emit('chat message',sudhanshu, msg);
+    io.sockets.in(roome+user).emit('chat message',sudhanshu, msg);
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');

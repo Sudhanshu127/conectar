@@ -32,15 +32,19 @@
     </div>
     <div class="split right">
       <div class="bottom">
-      {{You}} are taking with {{roome}}<br>
-      <ul id="messages"></ul>
-      <center>
+      {{You}} is talking with {{roome}}<br>
+      <h6 ng-repeat="x in messages">{{x.name}}:{{x.msg}}</h6>
+      <ul id="messages" ng-model="messages"></ul>
+
+      </div>
+            <center>
       <div>
+        <form ng-submit="send()"> 
         <input id="m" ng-model="message" autocomplete="off" />
-        <button id="send" ng-click="send()">Send</button>
+      </form>
+        <!-- <button id="send" ng-click="send()">Send</button> -->
       </div>
       </center>
-      </div>
     </div>
   </body>
 </html>
