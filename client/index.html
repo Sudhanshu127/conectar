@@ -10,11 +10,42 @@
     <script src="/js/app.js"></script>
   </head>
   <body ng-controller="mainController">
-    <ul id="messages"></ul>
-    <center>
-    <div>
-      <input id="m" ng-model="message" autocomplete="off" />
+    <div class="split left">
+      <div class="centered">
+        Who are you?
+        <input type="radio" ng-model='room1' ng-value='"Sudhanshu"' name="rdoResult">Sudhanshu</button><br>
+        <input type="radio" ng-model='room1' ng-value='"Vishal"' name="rdoResult">Vishal</button><br>
+        <input type="radio" ng-model='room1' ng-value='"Vipul"' name="rdoResult">Vipul</button><br>
+        <input type="radio" ng-model='room1' ng-value='"Ayush"' name="rdoResult">Ayush</button><br>
+        <input type="radio" ng-model='room1' ng-value='"Jayesh"' name="rdoResult">Jayesh</button><br>
+        <input type="radio" ng-model='room1' ng-value='"group"' name="rdoResult">group</button><br>
+        <button ng-click="submituser(room1)">Submit</button><br>
+        Whom do you want to talk to?
+        <input type="radio" ng-model='room' ng-value='"Sudhanshu"' name="rdoResult">Sudhanshu</button><br>
+        <input type="radio" ng-model='room' ng-value='"Vishal"' name="rdoResult">Vishal</button><br>
+        <input type="radio" ng-model='room' ng-value='"Vipul"' name="rdoResult">Vipul</button><br>
+        <input type="radio" ng-model='room' ng-value='"Ayush"' name="rdoResult">Ayush</button><br>
+        <input type="radio" ng-model='room' ng-value='"Jayesh"' name="rdoResult">Jayesh</button><br>
+        <input type="radio" ng-model='room' ng-value='"group"' name="rdoResult">group</button><br>
+        <button ng-click="submit(room)">Submit</button><br>
+      </div>
     </div>
-  </center>
+    <div class="split right">
+      <div class="bottom">
+      {{You}} is talking with {{roome}}<br>
+      <h6 ng-repeat="x in messages">{{x.name}}:{{x.msg}}</h6>
+      <ul id="messages" ng-model="messages"></ul>
+
+      </div>
+            <center>
+      <div>
+        <form ng-submit="send()"> 
+        <input id="m" ng-model="message" autocomplete="off" />
+      </form>
+        <!-- <button id="send" ng-click="send()">Send</button> -->
+      </div>
+      </center>
+
+    </div>
   </body>
 </html>
