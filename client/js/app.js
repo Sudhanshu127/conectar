@@ -28,5 +28,6 @@ socket.on('new chat message',function(user,msg){
 });
  socket.on('chat message', function(user,msg){
  	$scope.messages.push({"name":user,"msg":msg});
+
  });
 }]);
