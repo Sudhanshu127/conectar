@@ -8,8 +8,5 @@ app.controller('mainController',['$scope',function($scope){
   $scope.message="";
  }
  socket.on('chat message', function(msg){
-  var li=document.createElement("li");
-  li.appendChild(document.createTextNode(msg));
-  document.getElementById("messages").appendChild(li);
  });
 }]);
