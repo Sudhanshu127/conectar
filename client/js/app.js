@@ -2,7 +2,7 @@ var app=angular.module('myApp',[]);
 
 app.controller('mainController',['$scope',function($scope){
  var socket = io.connect();
- var roome="Sudhanshu";
+ var roome=[];
  var preroome;
  var user;
  $scope.submituser=function(response){
@@ -25,9 +25,11 @@ app.controller('mainController',['$scope',function($scope){
 }
 socket.on('new chat message',function(user,msg){
 	$scope.messages.push({"name":user,"msg":msg});
+	$scope.$apply();
 });
  socket.on('chat message', function(user,msg){
  	$scope.messages.push({"name":user,"msg":msg});
+	$scope.$apply();
 
  });
 }]);
