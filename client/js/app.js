@@ -5,6 +5,8 @@ app.controller('mainController',['$scope',function($scope){
  var roome=[];
  var preroome;
  var user;
+ var group="group";
+ var groupmembers=["Sudhanshu","Vishal","Vipul","Ayush","Jayesh"];
  $scope.submituser=function(response){
  	//socket.emit('user',response);
  	$scope.You=response;
@@ -19,8 +21,22 @@ app.controller('mainController',['$scope',function($scope){
  }
 
  $scope.send = function(){
+ 	if(roome==group)
+ 	{
+ 		groupchat();
+ 		return;
+ 	}
 	var msg=$scope.message;
 	socket.emit('chat message', msg,roome,user);
+	$scope.message="";
+}
+var groupchat=function(){
+	var msg=$scope.message;
+	for(var to in groupmembers)
+	{
+		var tosend=groupmembers[to];
+		socket.emit('group chat message', msg,roome,user,tosend);
+	}
 	$scope.message="";
 }
 socket.on('new chat message',function(user,msg){
