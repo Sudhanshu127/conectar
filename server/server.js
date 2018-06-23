@@ -75,6 +75,11 @@ io.on('connection', function(socket){
   	putIntoDatabase(to,roome,user,msg);
   	io.sockets.in(to+roome).emit('chat message',user,msg);
   });
+  socket.on('tagMe',function(msg,roome,user,to,who){
+  	console.log(who+" will be tagged");
+  	putIntoDatabase(to,roome+who,user,msg);
+  	io.sockets.in(to+roome).emit('chat message',user,who+" was tagged in "+msg);
+  });
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });

@@ -32,15 +32,22 @@
     </div>
     <div class="split right">
       <div class="bottom">
-      {{You}} is talking with {{roome}}<br>
+      {{You}} is talking with {{roome}}{{test}}<br>
       <h6 ng-repeat="x in messages">{{x.name}}:{{x.msg}}</h6>
       <ul id="messages" ng-model="messages"></ul>
 
       </div>
             <center>
-      <div>
+      <div id="Send">
+        <ul id="myUL">
+          <li ng-click="TagMe('Sudhanshu')">Sudhanshu</a></li>
+          <li ng-click="TagMe('Vishal')">Vishal</a></li>
+          <li ng-click="TagMe('Vipul')">Vipul</a></li>
+          <li ng-click="TagMe('Ayush')">Ayush</a></li>
+          <li ng-click="TagMe('Jayesh')">Jayesh</a></li>
+        </ul>
         <form ng-submit="send()"> 
-        <input id="m" ng-model="message" autocomplete="off" />
+        <input id="m" ng-model="message" autocomplete="off" ng-keyup="searchForTags()" />
       </form>
         <!-- <button id="send" ng-click="send()">Send</button> -->
       </div>
