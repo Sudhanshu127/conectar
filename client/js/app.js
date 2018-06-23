@@ -39,6 +39,7 @@ app.controller('mainController',['$scope',function($scope){
  	if(roome==group)
  	{
  		groupchat();
+ 		$scope.message="";
  		return;
  	}
 	var msg=$scope.message;
@@ -100,7 +101,7 @@ socket.on('new chat message',function(user,msg){
 	$scope.$apply();
 });
  socket.on('chat message', function(user2,msg){
- 	if((user2==roome)||(user2==user)||(roome=group)){
+ 	if((user2==roome)||(user2==user)||(roome==group)){
 	 	$scope.messages.push({"name":user2,"msg":msg});
 		$scope.$apply();	
  	}
