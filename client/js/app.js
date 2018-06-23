@@ -15,11 +15,14 @@ app.controller('mainController',['$scope',function($scope){
     a = li[i].getElementsByTagName("a")[0];
     li[i].style.display = "none";
 }
+//Used to create a user id
  $scope.submituser=function(response){
  	//socket.emit('user',response);
  	$scope.You=response;
  	user=response;
  }
+
+ //Submit the user you want to talk too
  $scope.submit =function(response){
  	preroome=roome;
  	roome=response;
@@ -27,11 +30,11 @@ app.controller('mainController',['$scope',function($scope){
  	$scope.messages=[];
  	socket.emit('join',roome,preroome,user);
  }
-
+//Click and see tags
  $scope.seetags =function(response){
  	socket.emit('seetags',roome,user,response);
  }
-
+//send messages when you press enter
  $scope.send = function(){
  	if(roome==group)
  	{
@@ -42,6 +45,8 @@ app.controller('mainController',['$scope',function($scope){
 	socket.emit('chat message', msg,roome,user);
 	$scope.message="";
 }
+
+//while typing you get tags which are stored in id="myUL" and "li" 
  $scope.searchForTags=function(){
  	if(roome==group)
  	{
@@ -64,6 +69,8 @@ app.controller('mainController',['$scope',function($scope){
  	}
 
 };
+
+//When clicked on any tag this is used to replace tag and store it
 $scope.TagMe=function(tag){
 	var a=$scope.message.lastIndexOf(" ");
 	var res =$scope.message.substring(0,a+1);
@@ -71,6 +78,8 @@ $scope.TagMe=function(tag){
 	$scope.message=res;
 	iWillBeTagged=tag;
 };
+
+//You dont need to know there on
 var groupchat=function(){
 	var msg=$scope.message;
 	for(var to in groupmembers)
@@ -90,9 +99,11 @@ socket.on('new chat message',function(user,msg){
 	$scope.messages.push({"name":user,"msg":msg});
 	$scope.$apply();
 });
- socket.on('chat message', function(user,msg){
- 	$scope.messages.push({"name":user,"msg":msg});
-	$scope.$apply();
+ socket.on('chat message', function(user2,msg){
+ 	if((user2==roome)||(user2==user)||(roome=group)){
+	 	$scope.messages.push({"name":user2,"msg":msg});
+		$scope.$apply();	
+ 	}
 
  });
 }]);

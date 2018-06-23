@@ -36,7 +36,7 @@ io.on('connection', function(socket){
 /////////////////////////////////////
 
   socket.on('join',function(roome,proome,user){
-  	socket.leave(proome);
+  	socket.leave(user+proome);
   	socket.join(user+roome);
   	var sudhanshu=user;
   	var url = "mongodb://"+ip+sudhanshu;
