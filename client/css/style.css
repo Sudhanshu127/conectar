@@ -21,9 +21,15 @@ div button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 1
 	background-color:red;
 }
 
+.center{
+	left:10%;
+	width:10%;
+	background-color: blue;
+}
+
 .right {
 	right:0;
-	width:90%;
+	width:80%;
 	background-color: #ccc;
 }
 

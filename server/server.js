@@ -57,8 +57,26 @@ io.on('connection', function(socket){
 		  });
 		  client.close();
 	});
+});
+	socket.on('seetags',function(roome,user,whosetags){
+		var sudhanshu=user;
+  		var url = "mongodb://"+ip+sudhanshu;
+		MongoClient.connect(url, function(err, client) {
+			if(err){
+				console.log("Error in seeing tags");
+			}
+			console.log("Seeing tags of "+whosetags);
+			var mydatabase=client.db(user);
+			const messageS=mydatabase.collection(roome+whosetags);
+			messageS.find({}).toArray(function(err,docs){
+				assert.equal(err,null);
+				for(var x of docs)
+				{
+					io.sockets.in(user+roome).emit("chat message",x.name,x.msg);
+				}
 
-
+			});
+		});
    });
   socket.on('chat message', function(msg,roome,user){
   	console.log(roome+"|||"+msg);

@@ -6,6 +6,7 @@ app.controller('mainController',['$scope',function($scope){
  var preroome;
  var user;
  var iWillBeTagged;
+ var seeMytags;
  var group="group";
  var groupmembers=["Sudhanshu","Vishal","Vipul","Ayush","Jayesh"];
  var ul=document.getElementById("myUL");
@@ -25,6 +26,10 @@ app.controller('mainController',['$scope',function($scope){
  	$scope.roome=roome;
  	$scope.messages=[];
  	socket.emit('join',roome,preroome,user);
+ }
+
+ $scope.seetags =function(response){
+ 	socket.emit('seetags',roome,user,response);
  }
 
  $scope.send = function(){
