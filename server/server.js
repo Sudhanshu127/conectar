@@ -34,6 +34,49 @@ io.on('connection', function(socket){
 ///////////////////////////////////////
 
 /////////////////////////////////////
+socket.on('loveit',function(user,roome,loveme){
+	var url="mongodb://"+ip+user;
+	MongoClient.connect(url,function(err,client){
+		if(err){
+			console.log("Error making love");
+		}
+		console.log("Putting love in "+user);
+		sudhanshudatabase=client.db(user);
+		const messageS = sudhanshudatabase.collection("love");
+		console.log("Value of loveme is ",loveme);
+		if(!loveme)
+		{
+			messageS.deleteMany({user:roome},function(err,obj){
+			assert.equal(err,null);
+			console.log("Doc deleted");
+		});
+		}
+		else
+		{
+			messageS.insertMany([{user:roome}],function(err,result){});
+
+		}
+		client.close();
+	});
+	var url="mongodb://"+ip+roome;
+	MongoClient.connect(url,function(err,client){
+		if(err){
+			console.log("Error changing love");
+		}
+		console.log("Increasing love in "+roome);
+		sudhanshudatabase=client.db(roome);
+		const messageA=sudhanshudatabase.collection("love");
+		if(loveme)
+		{
+			messageA.insertMany([{user:roome,love:user}],function(err,result){});
+		}
+		else
+		{
+			messageA.deleteMany({user:roome,love:user});
+		}
+		client.close();
+	});
+});
 
   socket.on('join',function(roome,proome,user){
   	// socket.leave(user+proome);
@@ -54,6 +97,21 @@ io.on('connection', function(socket){
 		  		//different bug in here
     			io.sockets.in(user+roome).emit('new chat message',x.name, x.msg);
    		  	}
+		  });
+		  const messageP=sudhanshudatabase.collection("love");
+		  messageP.find({user:user}).toArray(function(err,docs){
+		  	console.log(docs);
+		  });
+
+		  messageP.find({user:roome}).toArray(function(err,docs){
+		  	if(docs.length)
+		  	{
+		  		io.sockets.in(user+roome).emit('loveit',true);
+		  	}
+		  	else
+		  	{
+		  		io.sockets.in(user+roome).emit('loveit',false);
+		  	}
 		  });
 		  client.close();
 	});

@@ -15,6 +15,10 @@ app.controller('mainController',['$scope',function($scope){
     a = li[i].getElementsByTagName("a")[0];
     li[i].style.display = "none";
 }
+
+$scope.loveit=function(){
+	socket.emit('loveit',user,roome,$scope.love);
+}
 //Used to create a user id
  $scope.submituser=function(response){
  	//socket.emit('user',response);
@@ -96,6 +100,10 @@ var groupchat=function(){
 	iWillBeTagged="";
 	$scope.message="";
 }
+socket.on('loveit',function(love){
+	$scope.love=love;
+	$scope.$apply();
+});
 socket.on('new chat message',function(user,msg){
 	$scope.messages.push({"name":user,"msg":msg});
 	$scope.$apply();

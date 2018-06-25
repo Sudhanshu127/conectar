@@ -12,7 +12,7 @@
   <body ng-controller="mainController">
     <div class="split left">
       <div class="centered">
-        Who are you?
+        Who are you?<br>
         <input type="radio" ng-model='room1' ng-value='"Sudhanshu"' name="rdoResult">Sudhanshu</button><br>
         <input type="radio" ng-model='room1' ng-value='"Vishal"' name="rdoResult">Vishal</button><br>
         <input type="radio" ng-model='room1' ng-value='"Vipul"' name="rdoResult">Vipul</button><br>
@@ -20,7 +20,7 @@
         <input type="radio" ng-model='room1' ng-value='"Jayesh"' name="rdoResult">Jayesh</button><br>
         <input type="radio" ng-model='room1' ng-value='"group"' name="rdoResult">group</button><br>
         <button ng-click="submituser(room1)">Submit</button><br>
-        Whom do you want to talk to?
+        Whom do you want to talk to?<br>
         <input type="radio" ng-model='room' ng-value='"Sudhanshu"' name="rdoResult1">Sudhanshu</button><br>
         <input type="radio" ng-model='room' ng-value='"Vishal"' name="rdoResult1">Vishal</button><br>
         <input type="radio" ng-model='room' ng-value='"Vipul"' name="rdoResult1">Vipul</button><br>
@@ -32,7 +32,7 @@
     </div>
     <div class="split center">
       <div class="centered">
-        Whose tag do you want to see?
+        Whose tag do you want to see?<br>
         <input type="radio" ng-model='room2' ng-value='"Sudhanshu"' name="rdoResult2">Sudhanshu</button><br>
         <input type="radio" ng-model='room2' ng-value='"Vishal"' name="rdoResult2">Vishal</button><br>
         <input type="radio" ng-model='room2' ng-value='"Vipul"' name="rdoResult2">Vipul</button><br>
@@ -45,6 +45,7 @@
     <div class="split right">
       <div class="bottom">
       {{You}} is talking with {{roome}}{{test}}<br>
+      <input type="checkbox" ng-model="love" ng-click="loveit()">I love this mentor<br>
       <h6 ng-repeat="x in messages">{{x.name}}:{{x.msg}}</h6>
       <ul id="messages" ng-model="messages"></ul>
 
