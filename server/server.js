@@ -7,7 +7,7 @@ app.get('/', function(req, res){
   res.sendFile('./../client/index.html');
 });
 
-var n=20;
+var n=50;
 var MongoClient =require('mongodb').MongoClient;
 const assert = require('assert');
 var ip="localhost:27017/";
@@ -93,11 +93,12 @@ socket.on('loveit',function(user,roome,loveme){
 		  const messageS=sudhanshudatabase.collection(roome);
 		  messageS.find({}).sort({ $natural: -1 }).limit(n).toArray(function(err,docs){
 		  	assert.equal(err,null);
-		  	console.log(docs.length);
+		  	var t=docs.length;
+		  	console.log(t);
 		  	for(var x in docs)
 		  	{
 		  		//different bug in here
-    			io.sockets.in(user+roome).emit('new chat message',docs[n-x-1].name, docs[n-x-1].msg);
+    			io.sockets.in(user+roome).emit('new chat message',docs[t-x-1].name, docs[t-x-1].msg);
    		  	}
 		  });
 		  const messageP=sudhanshudatabase.collection("love");
