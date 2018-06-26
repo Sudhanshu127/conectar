@@ -1,11 +1,13 @@
 var app=angular.module('myApp',[]);
 
+
+
 app.controller('mainController',['$scope',function($scope){
  var socket = io.connect();
  var roome;
  var preroome;
  var user;
- var iWillBeTagged;
+ var iWillBeTagged=[];
  var seeMytags;
  var group="group";
  var groupmembers=["Sudhanshu","Vishal","Vipul","Ayush","Jayesh"];
@@ -81,7 +83,7 @@ $scope.TagMe=function(tag){
 	var res =$scope.message.substring(0,a+1);
 	res+=tag;
 	$scope.message=res;
-	iWillBeTagged=tag;
+	iWillBeTagged.push({name:tag});
 };
 
 //You dont need to know there on
@@ -97,7 +99,7 @@ var groupchat=function(){
 			socket.emit('tagMe',msg,roome,user,tosend,iWillBeTagged);
 		}		
 	}
-	iWillBeTagged="";
+	iWillBeTagged=[];
 	$scope.message="";
 }
 socket.on('loveit',function(love){

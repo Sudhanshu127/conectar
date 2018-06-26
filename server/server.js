@@ -7,6 +7,7 @@ app.get('/', function(req, res){
   res.sendFile('./../client/index.html');
 });
 
+var n=20;
 var MongoClient =require('mongodb').MongoClient;
 const assert = require('assert');
 var ip="localhost:27017/";
@@ -90,12 +91,13 @@ socket.on('loveit',function(user,roome,loveme){
 		  console.log("Retreving data from "+sudhanshu);
 		  sudhanshudatabase=client.db(sudhanshu);
 		  const messageS=sudhanshudatabase.collection(roome);
-		  messageS.find({}).toArray(function(err,docs){
+		  messageS.find({}).sort({ $natural: -1 }).limit(n).toArray(function(err,docs){
 		  	assert.equal(err,null);
-		  	for(var x of docs)
+		  	console.log(docs.length);
+		  	for(var x in docs)
 		  	{
 		  		//different bug in here
-    			io.sockets.in(user+roome).emit('new chat message',x.name, x.msg);
+    			io.sockets.in(user+roome).emit('new chat message',docs[n-x-1].name, docs[n-x-1].msg);
    		  	}
 		  });
 		  const messageP=sudhanshudatabase.collection("love");
@@ -152,9 +154,12 @@ socket.on('loveit',function(user,roome,loveme){
   	io.sockets.in(to+roome).emit('chat message',user,msg);
   });
   socket.on('tagMe',function(msg,roome,user,to,who){
-  	console.log(who+" will be tagged");
-  	putIntoDatabase(to,roome+who,user,msg);
-  	io.sockets.in(to+roome).emit('chat message',user,who+" was tagged in "+msg);
+  	for(var x of who)
+  	{
+	  	console.log(x.name+" will be tagged");
+	  	putIntoDatabase(to,roome+x.name,user,msg);
+	  	io.sockets.in(to+roome).emit('chat message',user,x.name+" was tagged in "+msg);	  		
+  	}
   });
   socket.on('disconnect', function(){
     console.log('user disconnected');
