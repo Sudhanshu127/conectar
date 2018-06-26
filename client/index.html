@@ -44,7 +44,8 @@
     </div>
     <div class="split right">
       <div class="bottom">
-      {{You}} is talking with {{roome}}{{test}}<br>
+      {{You}} is talking with {{roome}}{{test}}
+      <button ng-click="increasen()">See Previous</button><br>
       <input type="checkbox" ng-model="love" ng-click="loveit()">I love this mentor<br>
       <h6 ng-repeat="x in messages">{{x.name}}:{{x.msg}}</h6>
       <ul id="messages" ng-model="messages"></ul>

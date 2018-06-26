@@ -17,7 +17,12 @@ app.controller('mainController',['$scope',function($scope){
     a = li[i].getElementsByTagName("a")[0];
     li[i].style.display = "none";
 }
+$scope.increasen=function(){
+	socket.emit('increasen');
+	$scope.messages=[];
+ 	socket.emit('join',roome,preroome,user);
 
+}
 $scope.loveit=function(){
 	socket.emit('loveit',user,roome,$scope.love);
 }
@@ -34,6 +39,7 @@ $scope.loveit=function(){
  	roome=response;
  	$scope.roome=roome;
  	$scope.messages=[];
+ 	socket.emit('setn');
  	socket.emit('join',roome,preroome,user);
  }
 //Click and see tags

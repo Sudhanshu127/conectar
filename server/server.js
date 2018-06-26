@@ -7,7 +7,6 @@ app.get('/', function(req, res){
   res.sendFile('./../client/index.html');
 });
 
-var n=50;
 var MongoClient =require('mongodb').MongoClient;
 const assert = require('assert');
 var ip="localhost:27017/";
@@ -27,14 +26,59 @@ var putIntoDatabase=function(databaseof,databaseabout,messageby,msg){
 		  client.close();
 	});
 };
+var retreveYourData=function(user,proome,roome,n)
+{
+  	var url = "mongodb://"+ip+user;
+	MongoClient.connect(url, function(err, client) {
+		if (err){
+		  console.log("error");
+		}
+		  console.log("Retreving data from "+user);
+		  sudhanshudatabase=client.db(user);
+		  const messageS=sudhanshudatabase.collection(roome);
+		  messageS.find({}).sort({ $natural: -1 }).limit(n).toArray(function(err,docs){
+		  	assert.equal(err,null);
+		  	var t=docs.length;
+		  	console.log(t);
+		  	for(var x in docs)
+		  	{
+		  		//different bug in here
+    			io.sockets.in(user+roome).emit('new chat message',docs[t-x-1].name, docs[t-x-1].msg);
+   		  	}
+		  });
+		  const messageP=sudhanshudatabase.collection("love");
+		  messageP.find({user:user}).toArray(function(err,docs){
+		  	console.log(docs);
+		  });
 
+		  messageP.find({user:roome}).toArray(function(err,docs){
+		  	if(docs.length)
+		  	{
+		  		io.sockets.in(user+roome).emit('loveit',true);
+		  	}
+		  	else
+		  	{
+		  		io.sockets.in(user+roome).emit('loveit',false);
+		  	}
+		  });
+		  client.close();
+	});	
+}
 ///////////////////////////////////////
 
 io.on('connection', function(socket){
   console.log('user connected');
+	var n=50;
 ///////////////////////////////////////
 
 /////////////////////////////////////
+socket.on('increasen',function(){
+	n+=50;
+	console.log(n);
+});
+socket.on('setn',function(){
+	n=50;
+});
 socket.on('loveit',function(user,roome,loveme){
 	var url="mongodb://"+ip+user;
 	MongoClient.connect(url,function(err,client){
@@ -82,42 +126,8 @@ socket.on('loveit',function(user,roome,loveme){
   socket.on('join',function(roome,proome,user){
   	// socket.leave(user+proome);
   	socket.join(user+roome);
-  	var sudhanshu=user;
-  	var url = "mongodb://"+ip+sudhanshu;
-	MongoClient.connect(url, function(err, client) {
-		if (err){
-		  console.log("error");
-		}
-		  console.log("Retreving data from "+sudhanshu);
-		  sudhanshudatabase=client.db(sudhanshu);
-		  const messageS=sudhanshudatabase.collection(roome);
-		  messageS.find({}).sort({ $natural: -1 }).limit(n).toArray(function(err,docs){
-		  	assert.equal(err,null);
-		  	var t=docs.length;
-		  	console.log(t);
-		  	for(var x in docs)
-		  	{
-		  		//different bug in here
-    			io.sockets.in(user+roome).emit('new chat message',docs[t-x-1].name, docs[t-x-1].msg);
-   		  	}
-		  });
-		  const messageP=sudhanshudatabase.collection("love");
-		  messageP.find({user:user}).toArray(function(err,docs){
-		  	console.log(docs);
-		  });
+  	retreveYourData(user,proome,roome,n);
 
-		  messageP.find({user:roome}).toArray(function(err,docs){
-		  	if(docs.length)
-		  	{
-		  		io.sockets.in(user+roome).emit('loveit',true);
-		  	}
-		  	else
-		  	{
-		  		io.sockets.in(user+roome).emit('loveit',false);
-		  	}
-		  });
-		  client.close();
-	});
 });
 	socket.on('seetags',function(roome,user,whosetags){
 		var sudhanshu=user;
