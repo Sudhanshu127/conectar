@@ -17,6 +17,8 @@ app.controller('mainController',['$scope',function($scope){
     a = li[i].getElementsByTagName("a")[0];
     li[i].style.display = "none";
 }
+var a=new Date();
+$scope.test=a;
 $scope.increasen=function(){
 	socket.emit('increasen');
 	$scope.messages=[];
@@ -40,7 +42,8 @@ $scope.loveit=function(){
  	$scope.roome=roome;
  	$scope.messages=[];
  	socket.emit('setn');
- 	socket.emit('join',roome,preroome,user);
+ 	var a=new Date();
+ 	socket.emit('join',roome,preroome,user,a.getTime());
  }
 //Click and see tags
  $scope.seetags =function(response){
@@ -89,12 +92,24 @@ $scope.TagMe=function(tag){
 	var res =$scope.message.substring(0,a+1);
 	res+=tag;
 	$scope.message=res;
-	iWillBeTagged.push({name:tag});
 };
 
 //You dont need to know there on
 var groupchat=function(){
 	var msg=$scope.message;
+		var input,filter,ul,li,a,i;
+		filter=msg;
+		filter=filter.toUpperCase();
+
+		ul=document.getElementById("myUL");
+		li = ul.getElementsByTagName('li');
+	    for (i = 0; i < li.length; i++) {
+	        a = li[i];
+	        var t=a.innerHTML;
+	        if ((filter.indexOf(t.toUpperCase()) > -1)&&(filter.length>=3)) {
+	            iWillBeTagged.push({name:t});
+	        }
+	    }
 	for(var to in groupmembers)
 	{
 		var tosend=groupmembers[to];

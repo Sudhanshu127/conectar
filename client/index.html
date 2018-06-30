@@ -47,7 +47,10 @@
       {{You}} is talking with {{roome}}{{test}}
       <button ng-click="increasen()">See Previous</button><br>
       <input type="checkbox" ng-model="love" ng-click="loveit()">I love this mentor<br>
-      <h6 ng-repeat="x in messages">{{x.name}}:{{x.msg}}</h6>
+      <div ng-repeat="x in messages">
+        <h6 ng-if="x.name == You" style="text-align:right;">{{x.name}}:{{x.msg}}</h6>
+        <h6 ng-if="x.name != You" style="text-align:left;">{{x.name}}:{{x.msg}}</h6>
+      </div>
       <ul id="messages" ng-model="messages"></ul>
 
       </div>
