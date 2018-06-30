@@ -18,7 +18,7 @@ app.controller('mainController',['$scope',function($scope){
     li[i].style.display = "none";
 }
 var a=new Date();
-$scope.test=a;
+$scope.test=a.getDate();
 $scope.increasen=function(){
 	socket.emit('increasen');
 	$scope.messages=[];
@@ -51,14 +51,28 @@ $scope.loveit=function(){
  }
 //send messages when you press enter
  $scope.send = function(){
+ 	var date="";
+	var temp;
+	var u=new Date();
+	temp=u.getDate();
+	date+=temp+"-";
+	temp=u.getMonth()+1;
+	date+=temp;
+	var time="";
+	temp=u.getHours();
+	time+=temp+":";
+	temp=u.getMinutes();
+	time+=temp;
+	temp=u.getSeconds();
+	time+=temp;
  	if(roome==group)
  	{
- 		groupchat();
+ 		groupchat(date,time);
  		$scope.message="";
  		return;
  	}
 	var msg=$scope.message;
-	socket.emit('chat message', msg,roome,user);
+	socket.emit('chat message', msg,roome,user,date,time);
 	$scope.message="";
 }
 
@@ -92,10 +106,16 @@ $scope.TagMe=function(tag){
 	var res =$scope.message.substring(0,a+1);
 	res+=tag;
 	$scope.message=res;
+	var ul,li;
+	ul=document.getElementById("myUL");
+	li = ul.getElementsByTagName('li');
+	for (var i = 0; i < li.length; i++)
+		li[i].style.display="none";
 };
 
 //You dont need to know there on
-var groupchat=function(){
+var groupchat=function(date,time){
+
 	var msg=$scope.message;
 		var input,filter,ul,li,a,i;
 		filter=msg;
@@ -113,11 +133,11 @@ var groupchat=function(){
 	for(var to in groupmembers)
 	{
 		var tosend=groupmembers[to];
-		socket.emit('group chat message', msg,roome,user,tosend);
+		socket.emit('group chat message', msg,roome,user,tosend,date,time);
 		$scope.test=iWillBeTagged.length;
 		if(iWillBeTagged.length>0)
 		{
-			socket.emit('tagMe',msg,roome,user,tosend,iWillBeTagged);
+			socket.emit('tagMe',msg,roome,user,tosend,iWillBeTagged,date,time);
 		}		
 	}
 	iWillBeTagged=[];
@@ -127,13 +147,20 @@ socket.on('loveit',function(love){
 	$scope.love=love;
 	$scope.$apply();
 });
-socket.on('new chat message',function(user,msg){
-	$scope.messages.push({"name":user,"msg":msg});
+socket.on('new chat message',function(user,msg,date,time){
+	var p=time;
+	var c=p.indexOf(':');
+	var e=p.lastIndexOf(':');
+	var d=p.substring(c+1,e-1);
+	if(parseInt(d)<10)
+		d="0"+d;
+	time=p.substring(0,c+1)+d+p.substring(e+1,p.length);
+	$scope.messages.push({"name":user,"msg":msg,"date":date,"time":time});
 	$scope.$apply();
 });
- socket.on('chat message', function(user2,msg){
+ socket.on('chat message', function(user2,msg,date,time){
  	if((user2==roome)||(user2==user)||(roome==group)){
-	 	$scope.messages.push({"name":user2,"msg":msg});
+	 	$scope.messages.push({"name":user2,"msg":msg,"date":date,"time":time});
 		$scope.$apply();	
  	}
 

@@ -13,7 +13,7 @@ var ip="localhost:27017/";
 //var sudhanshu="group";
 var sudhanshudatabase;
 var friend;
-var putIntoDatabase=function(databaseof,databaseabout,messageby,msg){
+var putIntoDatabase=function(databaseof,databaseabout,messageby,msg,date,time){
   	var url = "mongodb://"+ip+databaseof;
 	MongoClient.connect(url, function(err, client) {
 		if (err){
@@ -22,7 +22,7 @@ var putIntoDatabase=function(databaseof,databaseabout,messageby,msg){
 		  console.log("Putting data into "+databaseof);
 		  sudhanshudatabase=client.db(databaseof);
 		  const messageS=sudhanshudatabase.collection(databaseabout);
-  		  messageS.insertMany([{name:messageby,msg:msg}],function(err,result){});
+  		  messageS.insertMany([{name:messageby,msg:msg,date:date,time:time}],function(err,result){});
 		  client.close();
 	});
 };
@@ -43,7 +43,7 @@ var retreveYourData=function(user,proome,roome,n)
 		  	for(var x in docs)
 		  	{
 		  		//different bug in here
-    			io.sockets.in(user+roome).emit('new chat message',docs[t-x-1].name, docs[t-x-1].msg);
+    			io.sockets.in(user+roome).emit('new chat message',docs[t-x-1].name, docs[t-x-1].msg,docs[t-x-1].date,docs[t-x-1].time);
    		  	}
 		  });
 		  const messageP=sudhanshudatabase.collection("love");
@@ -122,7 +122,7 @@ socket.on('loveit',function(user,roome,loveme){
 		client.close();
 	});
 });
-
+/////////
   socket.on('join',function(roome,proome,user){
   	// socket.leave(user+proome);
   	socket.join(user+roome);
@@ -149,27 +149,27 @@ socket.on('loveit',function(user,roome,loveme){
 			});
 		});
    });
-  socket.on('chat message', function(msg,roome,user){
+  socket.on('chat message', function(msg,roome,user,date,time){
   	console.log(roome+"|||"+msg);
   	var sudhanshu=user;
-  	putIntoDatabase(sudhanshu,roome,sudhanshu,msg);
-  	putIntoDatabase(roome,sudhanshu,sudhanshu,msg);
+  	putIntoDatabase(sudhanshu,roome,sudhanshu,msg,date,time);
+  	putIntoDatabase(roome,sudhanshu,sudhanshu,msg,date,time);
 	//bug over here
-    io.sockets.in(user+roome).emit('chat message',sudhanshu, msg);
-    io.sockets.in(roome+user).emit('chat message',sudhanshu, msg);
+    io.sockets.in(user+roome).emit('chat message',sudhanshu, msg,date,time);
+    io.sockets.in(roome+user).emit('chat message',sudhanshu, msg,date,time);
   });
 
-  socket.on('group chat message',function(msg,roome,user,to){
+  socket.on('group chat message',function(msg,roome,user,to,date,time){
   	console.log("Sending group a message "+msg+" Now feeding in "+to);
-  	putIntoDatabase(to,roome,user,msg);
-  	io.sockets.in(to+roome).emit('chat message',user,msg);
+  	putIntoDatabase(to,roome,user,msg,date,time);
+  	io.sockets.in(to+roome).emit('chat message',user,msg,date,time);
   });
-  socket.on('tagMe',function(msg,roome,user,to,who){
+  socket.on('tagMe',function(msg,roome,user,to,who,date,time){
   	for(var x of who)
   	{
 	  	console.log(x.name+" will be tagged");
-	  	putIntoDatabase(to,roome+x.name,user,msg);
-	  	io.sockets.in(to+roome).emit('chat message',user,x.name+" was tagged in "+msg);	  		
+	  	putIntoDatabase(to,roome+x.name,user,msg,date,time);
+	  	io.sockets.in(to+roome).emit('chat message',user,x.name+" was tagged in "+msg,date,time);	  		
   	}
   });
   socket.on('disconnect', function(){
