@@ -33,6 +33,7 @@ $scope.loveit=function(){
  	//socket.emit('user',response);
  	$scope.You=response;
  	user=response;
+ 	socket.emit('about me',user);
  }
 
  //Submit the user you want to talk too
@@ -160,6 +161,13 @@ socket.on('new chat message',function(user,msg,date,time){
 });
  socket.on('chat message', function(user2,msg,date,time){
  	if((user2==roome)||(user2==user)||(roome==group)){
+ 			var p=time;
+	var c=p.indexOf(':');
+	var e=p.lastIndexOf(':');
+	var d=p.substring(c+1,e-1);
+	if(parseInt(d)<10)
+		d="0"+d;
+	time=p.substring(0,c+1)+d+p.substring(e+1,p.length);
 	 	$scope.messages.push({"name":user2,"msg":msg,"date":date,"time":time});
 		$scope.$apply();	
  	}

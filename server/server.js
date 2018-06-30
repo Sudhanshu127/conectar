@@ -13,6 +13,7 @@ var ip="localhost:27017/";
 //var sudhanshu="group";
 var sudhanshudatabase;
 var friend;
+
 var putIntoDatabase=function(databaseof,databaseabout,messageby,msg,date,time){
   	var url = "mongodb://"+ip+databaseof;
 	MongoClient.connect(url, function(err, client) {
@@ -69,6 +70,15 @@ var retreveYourData=function(user,proome,roome,n)
 io.on('connection', function(socket){
   console.log('user connected');
 	var n=50;
+	var use;
+	socket.on('about me',function(user){
+		use=user;
+		// var url = "mongodb://"+ip+"usersonline";
+		// MongoClient.connect(url, function(err, client){
+		// 	if(err){};
+			
+		// };
+	});
 ///////////////////////////////////////
 
 /////////////////////////////////////
@@ -173,7 +183,7 @@ socket.on('loveit',function(user,roome,loveme){
   	}
   });
   socket.on('disconnect', function(){
-    console.log('user disconnected');
+    console.log(use+ ' disconnected');
   });
 });
 
