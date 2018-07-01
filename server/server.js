@@ -73,15 +73,30 @@ io.on('connection', function(socket){
 	var use;
 	socket.on('about me',function(user){
 		use=user;
-		// var url = "mongodb://"+ip+"usersonline";
-		// MongoClient.connect(url, function(err, client){
-		// 	if(err){};
-			
-		// };
+		var url = "mongodb://"+ip+"usersonline";
+		MongoClient.connect(url, function(err, client){
+			if(err){};
+			sudhanshudatabase=client.db("usersonline");
+		  	const messageS=sudhanshudatabase.collection("users");
+		  	messageS.insertMany([{user:user}]);
+		  	client.close();
+		});
 	});
 ///////////////////////////////////////
 
 /////////////////////////////////////
+	socket.on('find him',function(roome){
+		var url="mongodb://"+ip+"usersonline";
+		MongoClient.connect(url,function(err,client){
+			if(err){};
+			sudhanshudatabase=client.db("usersonline");
+			const messageS=sudhanshudatabase.collection("users");
+			messageS.find({user:roome}).toArray(function(err,docs){
+				io.sockets.in(use+roome).emit('status',docs.length);
+				client.close();
+			});
+		});
+	});
 socket.on('increasen',function(){
 	n+=50;
 	console.log(n);
@@ -183,6 +198,14 @@ socket.on('loveit',function(user,roome,loveme){
   	}
   });
   socket.on('disconnect', function(){
+  	var url = "mongodb://"+ip+"usersonline";
+		MongoClient.connect(url, function(err, client){
+			if(err){};
+			sudhanshudatabase=client.db("usersonline");
+		  	const messageS=sudhanshudatabase.collection("users");
+		  	messageS.deleteMany({user:use});
+		  	client.close();
+		});
     console.log(use+ ' disconnected');
   });
 });

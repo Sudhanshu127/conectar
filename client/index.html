@@ -45,7 +45,7 @@
     <div class="split right">
       <div class="bottom">
       {{You}} is talking with {{roome}}{{test}}
-      <button ng-click="increasen()">See Previous</button><br>
+      <button ng-click="increasen()">See Previous</button>{{status}}<br>
       <input type="checkbox" ng-model="love" ng-click="loveit()">I love this mentor<br>
       <div ng-repeat="x in messages">
         <h6 ng-if="x.name == You" style="text-align:right;">{{x.name}}:{{x.msg}} on {{x.date}} {{x.time}}</h6>

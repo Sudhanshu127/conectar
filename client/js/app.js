@@ -10,6 +10,7 @@ app.controller('mainController',['$scope',function($scope){
  var iWillBeTagged=[];
  var seeMytags;
  var group="group";
+ var intervalonline=10000;
  var groupmembers=["Sudhanshu","Vishal","Vipul","Ayush","Jayesh"];
  var ul=document.getElementById("myUL");
  var li = ul.getElementsByTagName('li');
@@ -18,7 +19,12 @@ app.controller('mainController',['$scope',function($scope){
     li[i].style.display = "none";
 }
 var a=new Date();
-$scope.test=a.getDate();
+var something=a.getTime();
+$scope.test=something;
+var u;
+function findstatus(){
+	socket.emit('find him',roome);
+};
 $scope.increasen=function(){
 	socket.emit('increasen');
 	$scope.messages=[];
@@ -40,6 +46,7 @@ $scope.loveit=function(){
  $scope.submit =function(response){
  	preroome=roome;
  	roome=response;
+ 	u=setInterval(findstatus,intervalonline);
  	$scope.roome=roome;
  	$scope.messages=[];
  	socket.emit('setn');
@@ -147,6 +154,18 @@ var groupchat=function(date,time){
 socket.on('loveit',function(love){
 	$scope.love=love;
 	$scope.$apply();
+});
+socket.on('status',function(value){
+	if(value)
+	{
+		$scope.status="online";
+		$scope.$apply();
+	}
+	else
+	{
+		$scope.status="offline";
+		$scope.$apply();
+	}
 });
 socket.on('new chat message',function(user,msg,date,time){
 	var p=time;
