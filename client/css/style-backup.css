@@ -1,7 +1,6 @@
-@font-face { font-family: Whitney Medium; src: url('whitney-medium.ttf'); }
-@font-face { font-family: Whitney SemiBold; src: url('Whitney-Semibold-Pro.otf'); }
 @font-face { font-family: Whitney; src: url('whitney-book-webfont.ttf'); }
 @font-face { font-family: Whitney Bold; font-weight: bold; src: url('whitney-bold-webfont.ttf'); }
+@font-face { font-family: Whitney Medium; src: url('whitney-medium.ttf'); }
 html, body, .main-container {
         width: 100%;
         height: 100%;
@@ -478,8 +477,6 @@ content: ' ';
 }
 .mention-panel
 {
-	position: relative;
-	overflow: hidden;
 	/*padding-top: 10px;*/
 	background-color: #2f3136;
 	order: 3;
@@ -665,68 +662,3 @@ code {    overflow-x: auto;
     padding: 0;
     vertical-align: baseline;
 }*/
-/*
-new
-*/
-/*.panel-icons
-{
-	
-	height: 25%;
-	width: 100%;
-	transition: all 1s;
-}
-.empty-icons
-{	
-	height: 75%;
-	width: 100%;
-	transition: all 1s;
-	
-	background-color: white;
-}
-.left-panel.active .panel-icons
-{
-		height: 8.33%;
-}
-.left-panel.active .empty-icons{
-	height: 91.67%;
-}
-.panel-icons .panel-icons-icon
-{
-	height: 33.33%;
-	width: 100%;
-}
-.panel-icons .panel-icons-icon
-{
-	height: 33.33%;
-	width: 100%;
-}*/
-/*.left-panel div div
-{
-	width: 100%;
-	height: 100%;
-	background-color: yellow;
-}
-.left-panel div .recent
-{
-	background-color: yellow;
-}
-.left-panel div .groups
-{
-	background-color: blue;
-}
-.left-panel div .room
-{
-	background-color: white;
-}
-.left-panel.active div
-{
-	
-}*/
-/*.left-panel div*/
-/*{*/
-	/*transition-duration: transform 1s;*/
-	/*height: 30px;*/
-	/*transform: translate(200%,-200%);*/
-	/*transform: translateY(-200%);*/
-	/*height: 8.33%;*/
-/*}*/
