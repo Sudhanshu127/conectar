@@ -18,6 +18,7 @@ app.directive('schrollBottom', function () {
 
 
 app.controller('mainController',['$scope','$sce',function($scope,$sce){//Changed for trustasHTMl.
+
  var socket = io.connect();
  var roome;
  var preroome;
@@ -40,7 +41,6 @@ app.controller('mainController',['$scope','$sce',function($scope,$sce){//Changed
  	{
  		return $sce.trustAsHtml(marked(response));
  	};
-
  var groupmembers=["Sudhanshu","Vishal","Vipul","Ayush","Jayesh"];
  var ul=document.getElementById("myUL");
  var li = ul.getElementsByTagName('li');
@@ -55,7 +55,9 @@ var u;
 function findstatus(){
 	socket.emit('find him',roome);
 };
+
 $scope.prevuser="";
+
 $scope.increasen=function(){
 	socket.emit('increasen');
 	$scope.messages=[];
@@ -96,14 +98,15 @@ $scope.loveit=function(){
 	temp=u.getDate();
 	date+=temp+"-";
 	temp=u.getMonth()+1;
+
+	date+=temp+"-";
+	temp=u.getYear();
 	date+=temp;
 	var time="";
-	temp=u.getHours();
-	time+=temp+":";
-	temp=u.getMinutes();
-	time+=temp;
-	temp=u.getSeconds();
-	time+=temp;
+	temp=u.toString();
+	var b=temp.lastIndexOf(' ');
+	time=temp.substring(b-17,b-9)
+
  	if(roome==group)
  	{
  		groupchat(date,time);
@@ -208,26 +211,29 @@ socket.on('status',function(value){
 	}
 });
 socket.on('new chat message',function(user,msg,date,time){
-	var p=time;
-	var c=p.indexOf(':');
-	var e=p.lastIndexOf(':');
-	var d=p.substring(c+1,e-1);
-	if(parseInt(d)<10)
-		d="0"+d;
+
+	// var p=time;
+	// var c=p.indexOf(':');
+	// var e=p.lastIndexOf(':');
+	// var d=p.substring(c+1,e-1);
+	// if(parseInt(d)<10)
+	// 	d="0"+d;
 	// time=p.substring(0,c+1)+d+p.substring(e+1,p.length);
-	time=p.substring(0,c+1)+d+p.substring(e+1,p.length);
+
 	$scope.messages.push({"name":user,"msg":msg,"date":date,"time":time});
 	$scope.$apply();
 });
  socket.on('chat message', function(user2,msg,date,time){
  	if((user2==roome)||(user2==user)||(roome==group)){
- 			var p=time;
-	var c=p.indexOf(':');
-	var e=p.lastIndexOf(':');
-	var d=p.substring(c+1,e-1);
-	if(parseInt(d)<10)
-		d="0"+d;
-	time=p.substring(0,c+1)+d+p.substring(e+1,p.length);
+
+ // 			var p=time;
+	// var c=p.indexOf(':');
+	// var e=p.lastIndexOf(':');
+	// var d=p.substring(c+1,e-1);
+	// if(parseInt(d)<10)
+	// 	d="0"+d;
+	// time=p.substring(0,c+1)+d+p.substring(e+1,p.length);
+
 	 	$scope.messages.push({"name":user2,"msg":msg,"date":date,"time":time});
 		$scope.$apply();	
  	}
