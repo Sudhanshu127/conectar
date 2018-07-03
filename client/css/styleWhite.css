@@ -700,7 +700,7 @@ new
 	height: 33.33%;
 	width: 100%;
 }*/
-/*.left-panel div div
+.left-panel div div
 {
 	width: 100%;
 	height: 100%;
@@ -721,13 +721,12 @@ new
 .left-panel.active div
 {
 	
-}*/
-/*.left-panel div*/
-/*{*/
+}
+.left-panel div
+{
 	/*transition-duration: transform 1s;*/
-	/*height: 30px;*/
+	height: 30px;
 	/*transform: translate(200%,-200%);*/
 	/*transform: translateY(-200%);*/
 	/*height: 8.33%;*/
-/*}*/
-
+}
