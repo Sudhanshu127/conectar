@@ -68,7 +68,7 @@ html, body, .main-container {
 }
 .chat-bar
 {
-	overflow: scroll;
+	/*overflow: scroll;*/
 	-webkit-box-shadow: 0 -1px 0 rgba(0,0,0,.1);
 	box-shadow: 0 -1px 0 rgba(0,0,0,.1);
 	border-top: 1px solid rgba(0,0,0,.2);
@@ -119,6 +119,7 @@ html, body, .main-container {
 	font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 15px;
 	color: #737f8d;
+
 	min-height: 44px;
 	opacity: .70;
 	border:0;
@@ -135,6 +136,7 @@ html, body, .main-container {
 {
 	/*margin-top: 10px;*/
 	flex: 20;
+
 	order: 2;
 	display: flex;
 	overflow-x: hidden;
@@ -252,7 +254,7 @@ html, body, .main-container {
 }
 .chat-title
 {
-	display: inline-block;
+	display: block;
 	margin: auto 0;
 	color: #4f545c;
 	/*font-family: "Segoe UI", Arial, sans-serif;*/
@@ -691,8 +693,9 @@ code {    overflow-x: auto;
 }*/
 .chat-time
 {
+	cursor:pointer;
 	font-family: Whitney;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: lighter;
 	display: inline-block;
 }
@@ -705,4 +708,22 @@ code {    overflow-x: auto;
 .favorite-button i.material-icons.md-dark.md-inactive:hover
 {
 	color: #f1c40f;
+}
+.online-indicator
+{
+	
+	display: block;
+	border-radius: 50%;
+	min-height: 10px;
+	min-width: 10px;
+	width: 10px;
+	height: 10px;
+	background-color: grey;
+	margin: auto 10px;
+}
+.online-indicator.online
+{
+
+	background-color: green;
+	
 }
