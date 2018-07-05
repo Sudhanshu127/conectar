@@ -3,11 +3,11 @@
   <head>
     <title>Socket.IO chat</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="./css/style2.css"/>
-    <link rel="stylesheet" type="text/css" href="./css/hint.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/style2.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/hint.css"/>
         <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.6.10/js/perfect-scrollbar.jquery.js"></script>
-    <link href="./css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
     <script src="/lib/angular-1.6.10/angular.js"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -66,7 +66,7 @@
             
             <div class="message">
                 <div class="chat-model">
-                <span class="hint--top hint--rounded hint--small aside" aria-label="{{x.name}}"><img src="/img/avatar.png" width="30px" height="30px" class="avatar-img">
+                <span class="hint--top hint--rounded hint--small aside" aria-label="{[{x.name}]}"><img src="/img/avatar.png" width="30px" height="30px" class="avatar-img">
                 </span><div class="chat-items">
                   <div class="chat-items-details">Jayesh</div>
                   <div class="message-text">This was mentioned <span class="mention-chat">@Jayesh</span></div>
@@ -77,7 +77,7 @@
           <div class="mentions_wrapper">
             <div class="message">
                 <div class="chat-model">
-                <span class="hint--top hint--rounded hint--small aside" aria-label="{{x.name}}"><img src="/img/avatar.png" width="30px" height="30px" class="avatar-img">
+                <span class="hint--top hint--rounded hint--small aside" aria-label="{[{x.name}]}"><img src="/img/avatar.png" width="30px" height="30px" class="avatar-img">
                 </span><div class="chat-items">
                   <div class="chat-items-details">Sudhanshu</div>
                   <div class="message-text">Apart above <code>@import</code> <span class="mention-chat">@Jayesh</span> hid placidly</div>
@@ -88,7 +88,7 @@
             <div class="mentions_wrapper">
             <div class="message">
                 <div class="chat-model">
-                <span class="hint--top hint--rounded hint--small aside" aria-label="{{x.name}}"><img src="/img/avatar.png" width="30px" height="30px" class="avatar-img">
+                <span class="hint--top hint--rounded hint--small aside" aria-label="{[{x.name}]}"><img src="/img/avatar.png" width="30px" height="30px" class="avatar-img">
                 </span><div class="chat-items">
                   <div class="chat-items-details">Sudhanshu</div>
                   <div class="message-text">Said more<code class="block">pre{
@@ -127,7 +127,7 @@
         <div class="left-panel hbox" ng-class="{'active':panelToggle===true}">
           <ul class="navigation-tabs vbox">
             <li class="tab conversation" ng-click="tab='chat';panelToggle?panelToggle:(panelToggle=(!panelToggle));">
-              <i class="material-icons md-light md-24 {{tab==='chat'?'active':''}}" >chat</i>
+              <i class="material-icons md-light md-24 {[{tab==='chat'?'active':''}]}" >chat</i>
             </li>
             <li class="tab search" ng-click="tab='search';panelToggle?panelToggle:(panelToggle=(!panelToggle));">
               <i class="material-icons md-light md-24" ng-class="{'active':tab==='search'}">search</i>
@@ -151,9 +151,9 @@
             <div class="message-container" ng-repeat="x in messages" >
               <div class="message">
                 <div class="chat-model">
-                <span class="hint--top hint--rounded hint--small aside" aria-label="{{x.name}}"><img src="/img/avatar.png" width="30px" height="30px" class="avatar-img">
+                <span class="hint--top hint--rounded hint--small aside" aria-label="{[{x.name}]}"><img src="/img/avatar.png" width="30px" height="30px" class="avatar-img">
                 </span><div class="chat-items">
-                  <div class="chat-items-details">{{x.name}}</div><div class="chat-time"">{{x.date}} {{x.time}}</div>
+                  <div class="chat-items-details">{[{x.name}]}</div><div class="chat-time"">{[{x.date}]} {[{x.time}]}</div>
                   <div class="message-text marked" ng-bind-html="markmsg(x.msg)"></div>
               </div>
             </div>
@@ -236,12 +236,12 @@
     </div>
     <div class="split right">
       <div class="bottom">
-      {{You}} is talking with {{roome}}{{test}}
-      <button ng-click="increasen()">See Previous</button>{{status}}<br>
+      {[{You}]} is talking with {[{roome}]}{[{test}]}
+      <button ng-click="increasen()">See Previous</button>{[{status}]}<br>
       <input type="checkbox" ng-model="love" ng-click="loveit()">I love this mentor<br>
       <div ng-repeat="x in messages">
-        <h6 ng-if="x.name == You" style="text-align:right;">{{x.name}}:{{x.msg}} on {{x.date}} {{x.time}}</h6>
-        <h6 ng-if="x.name != You" style="text-align:left;">{{x.name}}:{{x.msg}} on {{x.date}} {{x.time}}</h6>
+        <h6 ng-if="x.name == You" style="text-align:right;">{[{x.name}]}:{[{x.msg}]} on {[{x.date}]} {[{x.time}]}</h6>
+        <h6 ng-if="x.name != You" style="text-align:left;">{[{x.name}]}:{[{x.msg}]} on {[{x.date}]} {[{x.time}]}</h6>
       </div>
       <ul id="messages" ng-model="messages"></ul>
 

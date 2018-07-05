@@ -1,4 +1,8 @@
 var app=angular.module('myApp',[]);
+app.config(function($interpolateProvider) {
+  $interpolateProvider.startSymbol('{[{');
+  $interpolateProvider.endSymbol('}]}');
+});
 app.directive('schrollBottom', function () {
   return {
     scope: {

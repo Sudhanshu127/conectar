@@ -3,8 +3,16 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 app.use(express.static("./../client"));
-app.get('/', function(req, res){
-  res.sendFile('./../client/index.html');
+var exphbs = require('express-handlebars');
+
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+
+app.get('/chat', function(req, res){
+  res.render('index');
+});
+app.get('/',function(req,res){
+	res.render('index2');
 });
 
 var MongoClient =require('mongodb').MongoClient;
