@@ -166,6 +166,11 @@ socket.on('status',function(value){
 		$scope.$apply();
 	}
 });
+socket.on('empty messages',function(){
+	$scope.messages=[];
+	$scope.test="Empty";
+	$scope.$apply();
+});
 socket.on('new chat message',function(user,msg,date,time){
 	// var p=time;
 	// var c=p.indexOf(':');
@@ -174,6 +179,7 @@ socket.on('new chat message',function(user,msg,date,time){
 	// if(parseInt(d)<10)
 	// 	d="0"+d;
 	// time=p.substring(0,c+1)+d+p.substring(e+1,p.length);
+	// $scope.messages=[];
 	$scope.messages.push({"name":user,"msg":msg,"date":date,"time":time});
 	$scope.$apply();
 });

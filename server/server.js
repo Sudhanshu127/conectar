@@ -41,6 +41,7 @@ var retreveYourData=function(user,proome,roome,n)
 		  	assert.equal(err,null);
 		  	var t=docs.length;
 		  	console.log(t);
+		  	io.sockets.in(user+roome).emit('empty messages');
 		  	for(var x in docs)
 		  	{
 		  		//different bug in here
