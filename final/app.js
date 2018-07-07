@@ -291,5 +291,5 @@ socket.on('loveit',function(user,roome,loveme){
 
 app.use('/', routes);
 app.use('/users', users);
-
+module.exports=app;
 // Set Port

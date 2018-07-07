@@ -4,27 +4,37 @@ const exphbs = require('express-handlebars');
 const path = require('path');
 const nodemailer = require('nodemailer');
 const app = express();
-//const MongoClient = require('mongodb').MongoClient;
-//const url = "mongodb://localhost:27017/";
-//some stuff is static else will be passed either by having a route js file or add here only
-//we also need to make a function to upload image file in data base by gridfs in .chunks extension and then call it in same way
-/*MongoClient.connect(url, function(err, db) {
+const MongoClient = require('mongodb').MongoClient;
+const url = "mongodb://localhost:27017/";
+var mongo = require('mongodb').MongoClient;
+var objectId = require('mongodb').ObjectID;
+var assert = require('assert');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+var phone = '';
+var mail = '';
+var designation = '';
+var present = '';
+var tags = '';
+var username = 'vishal260700';
+
+MongoClient.connect(url, function(err, db) {
   if (err) console.log("error recieved");
   const dbo = db.db("users");
-  const userName = "username";
-  dbo.collection("user").findOne({"username":userName}, function(err, result) {
+  dbo.collection("user").findOne({"username":username}, function(err, result) {
     if (err) console.log('Error detected');
-    console.log(result);
-    const phone = result.phone;
-    const mail = result.mail;
-    const designation = result.designation;
-    const present = result.present;
-    const tags = result.tags;
+    phone = result.phone;
+    mail = result.mail;
+    designation = result.designation;
+    present = result.present;
+    tags = result.tags;
     console.log(result);
     db.close();
   });
-});*/
+});
+
 app.get('/', ensureAuthenticated,function(req, res) {
+
     res.render('dashboard',{
       title : 'vishal260700',
       username : 'vishal260700',
@@ -32,7 +42,7 @@ app.get('/', ensureAuthenticated,function(req, res) {
       phone : '9413605678',
       designation : 'student',
       cc : 'IIT Kanpur',
-      t1: 'Web Development',
+      t1: tags[0],
       t2 : 'App Development',
       t3 : 'Block Chain Development',
       f1 : 'Vipul Shankhpal',
@@ -41,6 +51,73 @@ app.get('/', ensureAuthenticated,function(req, res) {
       f4 : 'Jayesh'
     });
 });
+
+app.post('/update', function(req, res, next) {
+  var item = {
+    phone : req.body.phone,
+    mail : req.body.mail,
+    designation : req.body.designation,
+    present : req.body.cc
+  };
+  console.log(item);
+
+  mongo.connect(url, function(err, db) {
+    assert.equal(null, err);
+    const dbo = db.db("users");
+    dbo.collection('user').updateOne({"username" : username}, {$set: item}, function(err, res) {
+      assert.equal(null, err);
+      console.log('Item updated');
+      db.close();
+    });
+  });
+  res.redirect('/');
+});
+app.post('/update3', function(req, res, next) {
+  var item = req.body.del;
+  console.log(item);
+  mongo.connect(url, function(err, db) {
+    assert.equal(null, err);
+    const dbo = db.db("users");
+    dbo.collection('user').findOneAndUpdate({"username" : username} , {$pull : {tags : item}} , function(err, res) {
+      assert.equal(null, err);
+      console.log('Item Deleted');
+      db.close();
+    });
+  });
+  res.redirect('/');
+});
+/*app.get('/search',function(req,res,next){
+  var item = req.body.search;
+  console.log(item);
+
+  mongo.connect(url,function(err,db){
+    assert.equal(null, err);
+    const dbo = db.db("users");
+    dbo.collection('user').find({"username" : username},function(err,result){
+      assert.equal(null, err);
+      console.log(result);
+      db.close();
+    });
+  });
+});*/
+app.post('/update2', function(req, res, next) {
+  var item = {
+    tags : req.body.tag
+  };
+  console.log(item);
+
+  mongo.connect(url, function(err, db) {
+    assert.equal(null, err);
+    const dbo = db.db("users");
+    dbo.collection('user').updateOne({"username" : username}, {$addToSet: item}, function(err, res) {
+      assert.equal(null, err);
+      console.log('Item updated');
+      db.close();
+    });
+  });
+  res.redirect('/');
+});
+
 app.get('/tag',ensureAuthenticated,function(req,res){
   res.render('tagging',{
     username : 'vishal260700'
@@ -53,7 +130,7 @@ app.get('/team',ensureAuthenticated,function(req,res){
 });
 app.get('/chat', ensureAuthenticated,function (req, res) {
  res.render('chat',{
-  username : 'vishal260700'//will add a token/ session here
+  username : req.user.username//will add a token/ session here
  });
 });
 app.get('/contact', ensureAuthenticated,function (req, res) {
@@ -86,13 +163,13 @@ app.post('/send', (req, res) => {
     <p>You have a new contact request</p>
     <h3>Contact Details</h3>
     <ul>  
-      <li>Name: ${req.name}</li>
-      <li>Company: ${req.company}</li>
-      <li>Email: ${req.email}</li>
-      <li>Phone: ${req.phone}</li>
+      <li>Name: ${req.body.name}</li>
+      <li>Company: ${req.body.company}</li>
+      <li>Email: ${req.body.email}</li>
+      <li>Phone: ${req.body.phone}</li>
     </ul>
     <h3>Message</h3>
-    <p>${req.message}</p>
+    <p>${req.body.message}</p>
   `;
 
   // create reusable transporter object using the default SMTP transport

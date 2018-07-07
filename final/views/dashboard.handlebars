@@ -33,7 +33,22 @@
 		});
 	</script>
 </head>
-<body>
+<body id="body1">
+						<!--<section class="search">
+							<table class="table">
+						    <form action="/search" method="get">
+						        <tr class="input">
+						            <td><label for="search">Search</label></td>
+						            <td><input type="text" id="search" name="search"></td>
+						        </tr>
+						        <tr>
+						        	<td>
+						        		<button type="submit" class="btn btn-primary">SUBMIT</button>
+						        	</td>
+						        </tr>
+						    </form>
+						</table>
+						</section>-->
 	<div class="contain">
 		<div class="container">
 	<nav class="nav navbar-custom">
@@ -47,13 +62,12 @@
 				<li><a href="/about">About Conectar</a></li>
 				<li><a href="/contact">Query</a></li>
 				<li><a href="/chat">Chat</a></li>
-				<li><a href="/users/logout">LogOut</a></li>
+				<li><a href="#">LogOut</a></li>
 			</ul>
 		</div>
 	</nav>
 </div>
 </div>
-
 	<div class="container-fluid">
 		<div class="col-md-12">
 			<div class="col-md-3">
@@ -76,79 +90,35 @@
 
 			 <div class="modal fade" id="update" role="dialog">
 			    <div class="modal-dialog">
-			    
 			      <div class="modal-content">
 			        <div class="modal-header">
 			          <button type="button" class="close" data-dismiss="modal">&times;</button>
 			          <h4 class="modal-title">Edit Details</h4>
 			        </div>
 			        <div class="modal-body">
-			        	<table class="table">
-			        		<tr>
-			        			<td>Username</td>
-			        			<td>
-			        				<input type="text" name="username" class="username">
-			        			</td>
-			        		</tr>
-			        		<tr>
-			        			<td>Phone Number</td>
-			        			<td>
-			        				<input type="text" name="phone" class="phone">
-			        			</td>
-			        		</tr>
-			        		<tr>
-			        			<td>E-mail</td>
-			        		
-			        			<td>
-			        				<input type="mail" name="mail" class="mail">
-			        			</td>
-			        		</tr>
-			        		<tr>
-			        			<td>Designation</td>
-			        		
-			        			<td>
-			        				<input type="text" name="designation" class="designation">
-			        			</td>
-			        		</tr>
-			        		<tr>
-			        			<td>College/Company</td>
-			        			<td>
-			        				<input type="text" name="present" class="present">
-			        			</td>
-			        		</tr>
-			        		<tr>
-			        			<td><button type="submit" class="btn btn-primary" id="edit_submit">Submit</button></td>
-			        		</tr>
-			        	</table>
-			        </div>
-			        <div class="modal-footer">
-			          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-			        </div>
-			      </div>
-			     
-			    </div>
-			  </div>
-
-			 <!-- <div class="modal fade" id="delete" role="dialog">
-			    <div class="modal-dialog">
-			    
-			      <div class="modal-content">
-			        <div class="modal-header">
-			          <button type="button" class="close" data-dismiss="modal">&times;</button>
-			          <h4 class="modal-title">Delete Tag</h4>
-			        </div>
-			        <div class="modal-body">
-			        	<section class="insert">
-			        		<table class="table">
-						    <form action="/insert" method="post">
-						        <div class="input">
-						        <tr>
-						            <td><label for="title">Select Tag</label></td>
-						            <td><input type="text" id="tag" name="tag"></td>
+						<section class="update">
+							<table class="table">
+						    <form action="/update" method="post">
+						        <tr class="input">
+						            <td><label for="phone">Phone Number</label></td>
+						            <td><input type="text" id="phone" name="phone"></td>
 						        </tr>
-						        </div>
+						        <tr class="input">
+						            <td><label for="mail">Mail</label></td>
+						            <td><input type="text" id="mail" name="mail"></td>
+						        </tr>
+						        <tr class="input">
+						            <td><label for="designation">Designation</label></td>
+						            <td><input type="text" id="designation" name="designation"></td>
+						        </tr>
+						        <tr class="input">
+						            <td><label for="cc">College/Company</label></td>
+						            <td><input type="text" id="cc" name="cc"></td>
+						        </tr>
 						        <tr>
-						        <td><button type="submit" class="btn btn-danger">Submit</button></td>
+						        	<td>
+						        		<button type="submit" class="btn btn-primary">SUBMIT</button>
+						        	</td>
 						        </tr>
 						    </form>
 						</table>
@@ -160,7 +130,40 @@
 			      </div>
 			     
 			    </div>
-			  </div>	-->	
+			  </div>
+
+			 <div class="modal fade" id="delete" role="dialog">
+			    <div class="modal-dialog">
+			    
+			      <div class="modal-content">
+			        <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal">&times;</button>
+			          <h4 class="modal-title">Delete Tag</h4>
+			        </div>
+			        <div class="modal-body">
+			        	<section class="update3">
+			        		<table class="table">
+						    <form action="/update3" method="post">
+						        <div class="input">
+						        <tr>
+						            <td><label for="del">Select Tag to Delete</label></td>
+						            <td><input type="text" id="del" name="del"></td>
+						        </tr>
+						        </div>
+						        <tr>
+						        <td><button type="submit" class="btn btn-danger">Delete</button></td>
+						        </tr>
+						    </form>
+							</table>
+						</section>
+			        </div>
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+			        </div>
+			      </div>
+			     
+			    </div>
+			  </div>
 
 			  <div class="modal fade" id="insert" role="dialog">
 			    <div class="modal-dialog">
@@ -171,9 +174,9 @@
 			          <h4 class="modal-title">Add New Tag</h4>
 			        </div>
 			        <div class="modal-body">
-			        	<section class="insert">
+			        	<section class="update2">
 			        		<table class="table">
-						    <form action="/insert" method="post">
+						    <form action="/update2" method="post">
 						        <div class="input">
 						        <tr>
 						            <td><label for="title">New Tag</label></td>
@@ -243,23 +246,38 @@
 			</div>
 		</div>
 	</div>
+	<script>
+		var vol = 0;
+		const wage = document.getElementById('body1');
+		wage.addEventListener('keydown', (e) => {
+		    if (e.key === 'Enter') {
+		        vol = 20;
+		        console.log('enter');
+		        speak('Hello {{username}} thank you very much for calling me ',vol);
+		        speak('go on let your curiosity guide you...',vol);
+		    }
+		});
+	</script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script>
-		function speak(text1) {
+		function speak(text1,v) {
 			var msg = new SpeechSynthesisUtterance();
 			var voices = window.speechSynthesis.getVoices()
 			console.log(voices);
-			msg.volume = 20;
-			msg.rate = 1;
+			msg.volume = v;
+			msg.rate = 1.3;
 			msg.pitch = 10;
 			msg.text = text1;
 			window.speechSynthesis.speak(msg);
 		};
-		speak('Welcome To Conectar Your own personalised Dashboard to Meet like minded people like you...');
-		speak('My name is Jacob your Friend To help You navigate through the platform...');
+		speak('Congratulations,Now its time for me to fulfill',20);
+		speak('the promise i made to you ',20);
+		speak('my name is jacob your first ever friend you made on conectar platform',30);
+		speak('I will help you navigate through the platform',20);
+		speak('you can call me by pressing Enter',20);
 	var record = document.getElementById('searchMovie')
 	function startConverting(){
-		speak('Hello There,Speak to Search Your Interests!!');
+		speak('Hello There,Speak to Search Your Interests!!',20);
 		if ('webkitSpeechRecognition' in window){
 			var speechRecognizer = new webkitSpeechRecognition();
 			speechRecognizer.continous = true;
@@ -279,14 +297,10 @@
 				record.innerHTML = finaltranscripts;
 				console.log(finaltranscripts);
 				getMovies(finaltranscripts);
-				/*for(;x<1;x++){
-					speak("Thank you for using me");
-					speak("I hope You Will Love My Content");
-				};*/
 				x++;
 				if(x==3){
-					speak("Thank you for using me");
-					speak("I hope You Will Love My Content");
+					speak("Thank you for using me",20);
+					speak("I hope You Will Love My Content",20);
 				}
 				};
 		speechRecognizer.onerror = function(event){

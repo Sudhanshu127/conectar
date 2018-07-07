@@ -40,7 +40,7 @@ console.log("app.js is working");
   $scope.panelToggle=false;
   $scope.rightpanelToggle=false;
   $scope.friends=["Sudhanshu","Vishal","Vipul","Ayush","Jayesh","Rahul","Elon","Musk"];
-  $scope.username="Jayesh";
+  //$scope.username="Jayesh";
   $scope.markmsg=function(response)
  	{
  		return $sce.trustAsHtml(marked(response));
