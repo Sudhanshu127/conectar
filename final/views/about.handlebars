@@ -13,13 +13,13 @@
 				  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 				  crossorigin="anonymous"></script>
 </head>
-<body>
+<body id="body1">
 	<div class="contain">
 		<div class="container">
 	<nav class="nav navbar-custom">
 		<div class="container-fluid" id="heading">
 			<div class="nav navbar-header">
-				<nav class="navbar-brand"><a href="/"><img src="../images/logo.jpg" style="height:70px;width:70px;border-radius: 100%;"></a></nav>
+				<nav class="navbar-brand"><a href="/"><img src="../images/logo.jpg" style="height:70px;width:70px;border-radius: 0%;"></a></nav>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="/team">Team</a></li>
@@ -87,23 +87,28 @@
 			</div>
 		</div>
 <script>
-	function speak(text1) {
+		var vol = 0;
+		const wage = document.getElementById('body1');
+		wage.addEventListener('keydown', (e) => {
+		    if (e.key === 'Enter') {
+		        vol = 20;
+		        speak('Welcome to the About conectar page...',vol);
+		        speak('Here you will find out what you can do with conectar',vol);
+				speak('Enjoy The Tour and as i said before',vol);
+				speak('release your brains like a free bull to the world of conectar',vol);
+	    }
+		});
+	function speak(text1,v) {
 			var msg = new SpeechSynthesisUtterance();
 			var voices = window.speechSynthesis.getVoices()
 			console.log(voices);
-			msg.volume = 20;
+			msg.volume = v;
 			msg.rate = 1.5;
 			msg.pitch = 10;
 			msg.text = text1;
 			window.speechSynthesis.speak(msg);
 		};
-	speak('Welcome to the About Section of Conectar.');
-	speak('Navigate to the various sections by key press.');
-	speak('For example key 1 will make block 1 content speak out of the 6 blocks.');
-	speak('To abort any of the block-speak press Esc.');
-	speak('There is a Poster Cloud and Quick Go through Section Containing a Video Poster and PPT.');
-	speak('For Video kindly press V');
-	speak('Enjoy The Tour');
 </script>
 </body>
 </html>
+

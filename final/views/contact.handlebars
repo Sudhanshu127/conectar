@@ -14,13 +14,13 @@
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" />
 </head>
-<body>
+<body id="body1">
 <div class="contain">
 <div class="container">
   <nav class="nav navbar-custom">
     <div class="container-fluid" id="heading">
       <div class="nav navbar-header">
-        <nav class="navbar-brand"><a href="/"><img src="../images/logo.jpg" style="height:70px;width:70px;border-radius: 100%;"></a></nav>
+        <nav class="navbar-brand"><a href="/"><img src="../images/logo.jpg" style="height:70px;width:70px;border-radius: 0%;"></a></nav>
       </div>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/team">Team</a></li>
@@ -76,18 +76,25 @@
     </div>
   </div>
 <script>
-  function speak(text1) {
+  var vol = 0;
+    const wage = document.getElementById('body1');
+    wage.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            vol = 20;
+            speak('Hello there, Your feedback is highly appreciated for the Conectar Platform...',vol);
+            speak('We ensure to resolve your query.',vol);
+        }
+    });
+  function speak(text1,v) {
       var msg = new SpeechSynthesisUtterance();
       var voices = window.speechSynthesis.getVoices()
       console.log(voices);
-      msg.volume = 20;
-      msg.rate = 1.2;
+      msg.volume = v;
+      msg.rate = 1.5;
       msg.pitch = 10;
       msg.text = text1;
       window.speechSynthesis.speak(msg);
     };
-    speak('Hello there, Your feedback is highly appreciated for the Conectar Platform...');
-    speak('We ensure to resolve your related query.')
 </script>
 </body>
 </html>

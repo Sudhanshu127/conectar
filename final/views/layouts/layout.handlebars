@@ -2,29 +2,31 @@
 <html>
 <head>
 <link rel=stylesheet href="/thank-you/stylerender.css">
-	<title>LoginApp</title>
-	<link rel="stylesheet" href="/css/bootstrap.css" />
-	<link rel="stylesheet" href="/css/style.css" />
+<link rel="shortcut icon" type="image/jpg" href="../images/logo.jpg">
+  <title>Conectar</title>
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
 <div id=all>
             <section class=canvas-wrap>
-                <div id=canvas class=gradient></div>
+                <div id=canvas class=gradient>
+                </div>
             </section>
-	<div class="container">
+  <div class="container" style="background:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),none;">
       <div class="header clearfix">
         <nav>
+        <img src="../images/logo.jpg" style="width: 50px;height: 50px;margin-left: 2%;">
           <ul class="nav nav-pills pull-right">
             {{#if user}}
-              <li role="presentation"><a href="/">Dashboard</a></li>
-              <li role="presentation"><a href="/users/logout">Logout</a></li>
+              <li role="presentation"><a href="/" style="font-weight: bold;color: white;">Dashboard</a></li>
+              <li role="presentation"><a href="/users/logout" style="font-weight: bold;color: white;">Logout</a></li>
             {{else}}
-              <li role="presentation"><a href="/users/login">Login</a></li>
-              <li role="presentation"><a href="/users/register">Register</a></li>
+              <li role="presentation"><a href="/users/login" style="font-weight: bold;color: white;">Login</a></li>
+              <li role="presentation"><a href="/users/register" style="font-weight: bold;color: white;">Register</a></li>
             {{/if}}
           </ul>
         </nav>
-        <h3 class="text-muted">LoginApp</h3>
       </div>
 
 
@@ -48,13 +50,10 @@
         
       </div>
 
-      <footer class="footer">
-        <p>&copy; 2015 LoginApp, Inc.</p>
-      </footer>
 
     </div> <!-- /container -->
-	</div>
-	<script defer src="/thank-you/js/vue.js_%3b%20filename_%3dutf-8%27%20%27vue14a9.js?v=93a67750"></script>
+  </div>
+  <script defer src="/thank-you/js/vue.js_%3b%20filename_%3dutf-8%27%20%27vue14a9.js?v=93a67750"></script>
             <script defer src="/thank-you/js/locales.js_%3b%20filename_%3dutf-8%27%20%27localese0e5.js?v=f3cb31d0"></script>
             <script defer src="/thank-you/js/vuelib.js_%3b%20filename_%3dutf-8%27%20%27vuelib3e9d.js?v=0dee75cb"></script>
             <script defer src="/thank-you/js/app.js_%3b%20filename_%3dutf-8%27%20%27app3f8f.js?v=81e9c36d"></script>
