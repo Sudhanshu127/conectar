@@ -18,38 +18,57 @@ var present = '';
 var tags = '';
 var username = 'vishal260700';
 
-MongoClient.connect(url, function(err, db) {
-  if (err) console.log("error recieved");
-  const dbo = db.db("users");
-  dbo.collection("user").findOne({"username":username}, function(err, result) {
-    if (err) console.log('Error detected');
-    phone = result.phone;
-    mail = result.mail;
-    designation = result.designation;
-    present = result.present;
-    tags = result.tags;
-    console.log(result);
-    db.close();
-  });
-});
+
 
 app.get('/', ensureAuthenticated,function(req, res) {
-
-    res.render('dashboard',{
-      title : 'vishal260700',
-      username : 'vishal260700',
-      mail : 'vishal260700@gmail.com',
-      phone : '9413605678',
-      designation : 'student',
-      cc : 'IIT Kanpur',
+MongoClient.connect(url, function(err, db) {
+  if (err) console.log("error recieved");
+  const dbo = db.db(req.user.username);
+  dbo.collection(req.user.username).findOne({}, function(err, result) {
+    if (err) console.log('Error detected');
+    try{
+      phone = result.phone;
+    }
+    catch(e){};
+    try
+    {
+      mail = result.mail;
+    }
+    catch(e){};
+    try
+    {
+      designation = result.designation;
+    }
+    catch(e){};
+    try
+    {
+      if(result.present)present = result.present;
+    }
+    catch(e){};
+    try{
+      tags = result.tags;
+    }
+    catch(e){};
+      res.render('dashboard',{
+      title : req.user.username,
+      username : req.user.username,
+      mail : mail,
+      phone : phone,
+      designation : designation,
+      cc : present,
       t1: tags[0],
-      t2 : 'App Development',
-      t3 : 'Block Chain Development',
+      t2 : tags[1],
+      t3 : tags[2],
       f1 : 'Vipul Shankhpal',
       f2 : 'Ayush Soneria',
       f3 : 'Sudhanshu Bansal',
       f4 : 'Jayesh'
     });
+    console.log(result);
+    db.close();
+  });
+});
+
 });
 
 app.post('/update', function(req, res, next) {
@@ -60,11 +79,11 @@ app.post('/update', function(req, res, next) {
     present : req.body.cc
   };
   console.log(item);
-
-  mongo.connect(url, function(err, db) {
+  const v=url+req.user.username;
+  mongo.connect(v, function(err, db) {
     assert.equal(null, err);
-    const dbo = db.db("users");
-    dbo.collection('user').updateOne({"username" : username}, {$set: item}, function(err, res) {
+    const dbo = db.db(req.user.username);
+    dbo.collection(req.user.username).updateOne({"username":req.user.username},{$set: item}, function(err, res) {
       assert.equal(null, err);
       console.log('Item updated');
       db.close();
@@ -75,10 +94,11 @@ app.post('/update', function(req, res, next) {
 app.post('/update3', function(req, res, next) {
   var item = req.body.del;
   console.log(item);
-  mongo.connect(url, function(err, db) {
+  const v=url+req.user.username;
+  mongo.connect(v, function(err, db) {
     assert.equal(null, err);
-    const dbo = db.db("users");
-    dbo.collection('user').findOneAndUpdate({"username" : username} , {$pull : {tags : item}} , function(err, res) {
+    const dbo = db.db(req.user.username);
+    dbo.collection(req.user.username).findOneAndUpdate({$pull : {tags : item}} , function(err, res) {
       assert.equal(null, err);
       console.log('Item Deleted');
       db.close();
@@ -105,11 +125,11 @@ app.post('/update2', function(req, res, next) {
     tags : req.body.tag
   };
   console.log(item);
-
-  mongo.connect(url, function(err, db) {
+  const v=url+req.user.username;
+  mongo.connect(v, function(err, db) {
     assert.equal(null, err);
-    const dbo = db.db("users");
-    dbo.collection('user').updateOne({"username" : username}, {$addToSet: item}, function(err, res) {
+    const dbo = db.db(req.user.username);
+    dbo.collection(req.user.username).updateOne({"username":req.user.username},{$addToSet: item}, function(err, res) {
       assert.equal(null, err);
       console.log('Item updated');
       db.close();

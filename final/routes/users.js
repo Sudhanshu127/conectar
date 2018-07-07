@@ -4,7 +4,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
-
+var MongoClient =require('mongodb').MongoClient;
+const assert = require('assert');
 // Register
 router.get('/register', function (req, res) {
 	res.render('register');
@@ -63,6 +64,18 @@ router.post('/register', function (req, res) {
 						if (err) throw err;
 						console.log(user.username);
 					});
+					    var url = "mongodb://localhost:27017/"+username;
+  MongoClient.connect(url, function(err, client) {
+    if (err){
+      console.log("error");
+    }
+      console.log("Putting data into "+username);
+      var sudhanshudatabase=client.db(username);
+      const messageS=sudhanshudatabase.collection(username);
+      var tags=[];
+        messageS.insertMany([{username:username,mail:email,phone:'',designation:'',present:'',tags:tags,friends:tags}],function(err,result){});
+      client.close();
+  });
          	req.flash('success_msg', 'You are registered and can now login');
 					res.redirect('/users/login');
 				}
