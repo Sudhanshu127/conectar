@@ -18,10 +18,9 @@ var present = '';
 var tags = '';
 var username = 'vishal260700';
 
-
-
 app.get('/', ensureAuthenticated,function(req, res) {
-MongoClient.connect(url, function(err, db) {
+  var v=url+req.user.username;
+MongoClient.connect(v, function(err, db) {
   if (err) console.log("error recieved");
   const dbo = db.db(req.user.username);
   dbo.collection(req.user.username).findOne({}, function(err, result) {

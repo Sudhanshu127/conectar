@@ -20,6 +20,9 @@
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  <script src="/lib/angular-1.6.10/angular.js"></script>
+	  <script src="/js/appAngular.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
 	<script>
 		$(document).ready(function(){
 			$("#tagsbtn").click(function(){
@@ -33,7 +36,7 @@
 		});
 	</script>
 </head>
-<body id="body1">
+<body id="body1" ng-app="myApp" ng-controller="mainController">
 	<div class="contain">
 		<div class="container">
 	<nav class="nav navbar-custom">
@@ -207,11 +210,7 @@
 				</div>
 				<div class="col-md-12" id="tags" style="display: none;">
 					<ul class="list-group">
-						<li class="list-group-item">{{t1}}</li>
-						<li class="list-group-item">{{t2}}</li>
-						<li class="list-group-item">{{t3}}</li>
-						<li class="list-group-item">{{t4}}</li>
-						<li class="list-group-item">{{t5}}</li>
+						<li class="list-group-item">[[tags]]</li>
 						<li class="list-group-item"><button class="btn btn-primary" style="width: 100%;" data-toggle="modal" data-target="#insert">Add More</button></li>
 						<li class="list-group-item"><button class="btn btn-danger" style="width: 100%;" data-toggle="modal" data-target="#delete">Delete</button></li>
 					</ul>

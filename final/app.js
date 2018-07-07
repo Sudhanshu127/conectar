@@ -10,6 +10,10 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
+var passport = require('passport');
+var router = express.Router();
+var LocalStrategy = require('passport-local').Strategy;
+// var User = require('./models/user');
 
 mongoose.connect('mongodb://localhost/loginapp');
 var db = mongoose.connection;
@@ -70,6 +74,7 @@ app.use(expressValidator({
   }
 }));
 
+
 // var server = http.createServer(app);
 // var io = require('socket.io').listen(server);
 // Connect Flash
@@ -85,8 +90,8 @@ app.use(function (req, res, next) {
 });
 
 
-var MongoClient =require('mongodb').MongoClient;
-const assert = require('assert');
+const MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
 var ip="localhost:27017/";
 //var sudhanshu="group";
 var sudhanshudatabase;
