@@ -118,6 +118,7 @@ $scope.loveit=function(){
  		return;
  	}
 	var msg=$scope.message;
+  msg=encodeURIComponent(msg);
 	socket.emit('chat message', msg,roome,user,date,time);
 	$scope.message="";
 }
@@ -172,6 +173,7 @@ $scope.TagMe=function(tag){
 var groupchat=function(date,time){
 
 	var msg=$scope.message;
+  msg=encodeURIComponent(msg);
 		var input,filter,ul,li,a,i;
 		filter=msg;
 		filter=filter.toUpperCase();
@@ -220,7 +222,7 @@ socket.on('empty messages',function(){
 	$scope.$apply();
 });
 socket.on('new chat message',function(user,msg,date,time){
-
+  msg=decodeURIComponent(msg);
 	// var p=time;
 	// var c=p.indexOf(':');
 	// var e=p.lastIndexOf(':');
@@ -233,7 +235,7 @@ socket.on('new chat message',function(user,msg,date,time){
 });
  socket.on('chat message', function(user2,msg,date,time){
  	if((user2==roome)||(user2==user)||(roome==group)){
-
+    msg=decodeURIComponent(msg);
  // 			var p=time;
 	// var c=p.indexOf(':');
 	// var e=p.lastIndexOf(':');
