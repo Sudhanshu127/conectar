@@ -4,15 +4,20 @@ app.config(function ($interpolateProvider) {
   $interpolateProvider.endSymbol(']]');
 });
 
-app.controller('mainController',['$scope',function($scope){
-	var myElement = angular.element( document.querySelector( '#title' ) );
-	var username=myElement.text();
+app.controller('mainController',['$scope','$http',function($scope,$http){
+	// var myElement = angular.element( document.querySelector( '#title' ) );
+	var username;
+	$http.get('/user.json').then(function(res) {
+    username=res.data.username;
+    run();
+});
+	function run(){
 	var socket=io.connect();
+	// console.log(#{username});
 	socket.emit('get tags',username);	
 	socket.on('the tags',function(tags){
 		$scope.tags=tags;
 		$scope.$apply();
-		console.log(tags);
 	});
 	var friends=[];
 	socket.emit('getfriends',username);
@@ -48,4 +53,5 @@ app.controller('mainController',['$scope',function($scope){
 		$scope.friends.push({friend});
 		$scope.$apply();
 	};
+}
 }]);

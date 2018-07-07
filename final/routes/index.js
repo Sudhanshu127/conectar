@@ -74,7 +74,9 @@ MongoClient.connect(v, function(err, db) {
 });
 
 });
-
+app.get('/user.json', function(req, res, next) {
+  res.json({username: req.user.username});
+});
 app.post('/update', function(req, res, next) {
   var item = {
     phone : req.body.phone,
