@@ -19,6 +19,11 @@ var tags = '';
 var username = 'vishal260700';
 
 app.get('/', ensureAuthenticated,function(req, res) {
+//   exports=module.exports=function(io){
+//   io.sockets.on('connection',function(socket){
+//     socket.emit('username',req.user.username);
+//   });
+// };
   var v=url+req.user.username;
 MongoClient.connect(v, function(err, db) {
   if (err) console.log("error recieved");
@@ -242,4 +247,5 @@ function ensureAuthenticated(req, res, next){
 // http.listen(3000, function(){
 //   console.log('listening on *:3000');
 // });
+
 module.exports = app;

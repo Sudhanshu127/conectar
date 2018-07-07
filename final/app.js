@@ -11,10 +11,9 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var router = express.Router();
+const nodemailer = require('nodemailer');
 var LocalStrategy = require('passport-local').Strategy;
-// var User = require('./models/user');
-
+var User = require('./models/user');
 mongoose.connect('mongodb://localhost/loginapp');
 var db = mongoose.connection;
 
@@ -31,6 +30,8 @@ var server=app.listen(app.get('port'), function(){
 
 // var http = require('http').Server(app);
 var io = require('socket.io')(server);
+// var fs=require('fs');
+// var file=require('./routes/index')(io);
 app.use(express.static("./public"));
 // View Engine
 app.set('views', path.join(__dirname, 'views'));
@@ -74,7 +75,7 @@ app.use(expressValidator({
   }
 }));
 
-
+// app.get('/',function(req,res){});
 // var server = http.createServer(app);
 // var io = require('socket.io').listen(server);
 // Connect Flash
@@ -281,6 +282,145 @@ socket.on('loveit',function(user,roome,loveme){
       io.sockets.in(to+roome).emit('chat message',user,x.name+" was tagged in "+msg,date,time);       
     }
   });
+  socket.on('get tags',function(username){
+    var url = "mongodb://"+ip+username;
+    socket.join(username);
+    MongoClient.connect(url, function(err, client) {
+      if(err){
+        console.log("Error in seeing tags");
+      }
+      // console.log("Seeing tags of "+whosetags);  
+      var mydatabase=client.db(username);
+      const messageS=mydatabase.collection(username);
+      messageS.find({username:username}).toArray(function(err,docs){
+        assert.equal(err,null);
+        console.log(docs[0].tags);
+        console.log(docs.length);
+        io.sockets.in(username).emit("the tags",docs[0].tags);
+        socket.leave(username);
+        client.close();
+      });
+    })
+
+  });
+  socket.on('add to friends',function(username,friend){
+    var url = "mongodb://"+ip+username;
+    socket.join(username);
+    MongoClient.connect(url, function(err, client) {
+      if(err){
+        console.log("Error in seeing tags");
+      }
+      // console.log("Seeing tags of "+whosetags);  
+      var mydatabase=client.db(username);
+      const messageS=mydatabase.collection(username);
+      messageS.update({username:username},{$push:{friends:friend}});
+    socket.leave(username);
+    client.close();
+    });
+    var url = "mongodb://"+ip+friend;
+    socket.join(friend);
+    MongoClient.connect(url, function(err, client) {
+      if(err){
+        console.log("Error in seeing tags");
+      }
+      // console.log("Seeing tags of "+whosetags);  
+      var mydatabase=client.db(friend);
+      const messageS=mydatabase.collection(friend);
+      messageS.update({username:friend},{$push:{friends:username}});
+          socket.leave(friend);
+          client.close();
+    });
+
+  });
+  socket.on('friend request',function(username,friend){
+    var url = "mongodb://"+ip+friend;
+    socket.join(friend);
+    MongoClient.connect(url, function(err, client) {
+      if(err){
+        console.log("Error in seeing tags");
+      }
+      // console.log("Seeing tags of "+whosetags);  
+      var mydatabase=client.db(friend);
+      const messageS=mydatabase.collection(friend);
+      messageS.insertMany({type:"friendrequest",people:username});
+      socket.emit('got new friend requests',username);
+    socket.leave(friend);
+    client.close();
+    });
+  });
+  socket.on('getfriends',function(username){
+    var url = "mongodb://"+ip+username;
+    socket.join(username);
+    MongoClient.connect(url, function(err, client) {
+      if(err){
+        console.log("Error in seeing tags");
+      }
+      // console.log("Seeing tags of "+whosetags);  
+      var mydatabase=client.db(username);
+      const messageS=mydatabase.collection(username);
+      messageS.find({username:username}).toArray(function(err,docs){
+        assert.equal(err,null);
+        io.sockets.in(username).emit("the friends",docs[0].friends);
+
+    socket.leave(username);
+    client.close();
+      });
+    })
+  });
+  socket.on('tag',function(username,tag,like){
+    var url = "mongodb://"+ip+"tagsldifjjs";
+    // socket.join(username);
+    MongoClient.connect(url, function(err, client) {
+      if(err){
+        console.log("Error in seeing tags");
+      }
+      // console.log("Seeing tags of "+whosetags);  
+      var mydatabase=client.db("tagsldifjjs");
+      const messageS=mydatabase.collection(tag);
+      messageS.insertMany({people:username,like:like});
+    client.close();
+    });
+  });
+  socket.on('available friend request',function(username){
+    var url = "mongodb://"+ip+username;
+    socket.join(username);
+    MongoClient.connect(url, function(err, client) {
+      if(err){
+        console.log("Error in seeing tags");
+      }
+      // console.log("Seeing tags of "+whosetags);  
+      var mydatabase=client.db(username);
+      const messageS=mydatabase.collection(username);
+      messageS.find({type:"friendrequest"}).toArray(function(err,docs){
+        assert.equal(err,null);
+        for(var x of docs)
+        io.sockets.in(username).emit("my friend request",x.people);
+
+    socket.leave(username);
+    client.close();
+      });
+    })
+  });
+  socket.on('search for people',function(tag,username){
+    var url = "mongodb://"+ip+"tagsldifjjs";
+    socket.join(username);
+    MongoClient.connect(url, function(err, client) {
+      if(err){
+        console.log("Error in seeing tags");
+      }
+      // console.log("Seeing tags of "+whosetags);  
+      var mydatabase=client.db("tagsldifjjs");
+      const messageS=mydatabase.collection("tag");
+      messageS.find({}).toArray(function(err,docs){
+        assert.equal(err,null);
+        for(var x of docs)
+        io.sockets.in(username).emit("searched people",x.people);
+
+    socket.leave(username);
+    client.close();
+      });
+    })
+  });
   socket.on('disconnect', function(){
     var url = "mongodb://"+ip+"usersonline";
     MongoClient.connect(url, function(err, client){
@@ -293,6 +433,7 @@ socket.on('loveit',function(user,roome,loveme){
     console.log(use+ ' disconnected');
   });
 });
+
 
 app.use('/', routes);
 app.use('/users', users);
