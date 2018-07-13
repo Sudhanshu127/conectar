@@ -361,6 +361,7 @@ socket.on('loveit',function(user,roome,loveme){
       const messageS=mydatabase.collection(username);
       messageS.find({username:username}).toArray(function(err,docs){
         assert.equal(err,null);
+        console.log(docs);
         io.sockets.in(username).emit("the friends",docs[0].friends);
 
     socket.leave(username);

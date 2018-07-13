@@ -23,18 +23,23 @@ app.directive('schrollBottom', function () {
 
 app.controller('mainController',['$scope','$sce','$http',function($scope,$sce,$http){//Changed for trustasHTMl.
 console.log("app.js is working");
+
+ var user;
   var username;
   $http.get('/user.json').then(function(res) {
     username=res.data.username;
+  user=username;
+  // console.log(user);
     run();
 });
 function run(){
  var socket = io.connect();
  var roome;
+ $scope.roome="";
  var preroome;
- var user;
  var iWillBeTagged=[];
  var seeMytags;
+  // console.log(user);
  var group="group";
  var intervalonline=10000;
  var dateFormat = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
@@ -45,12 +50,14 @@ function run(){
 
  //function for markdown msg
   // Hhard Coding
+  socket.emit('about me',user);
   $scope.panelToggle=false;
   $scope.rightpanelToggle=false;
   socket.emit('getfriends',username);
   socket.on('the friends',function(friends){
     console.log("Hey");
     $scope.friends=friends;
+    console.log($scope.friends);
     $scope.$apply();
   });
   //$scope.username="Jayesh";
@@ -88,14 +95,13 @@ $scope.loveit=function(){
  $scope.submituser=function(response){
  	//socket.emit('user',response);
  	$scope.You=response;
- 	user=response;
- 	socket.emit('about me',user);
  }
 
  //Submit the user you want to talk too
  $scope.submit =function(response){
  	preroome=roome;
  	roome=response;
+  $scope.roome=roome;
  	u=setInterval(findstatus,intervalonline);
  	$scope.roome=roome;
  	$scope.messages=[];
