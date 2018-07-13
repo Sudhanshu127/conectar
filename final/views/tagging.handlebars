@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{username}}</title>
-    <link rel="shortcut icon" type="image/jpg" href="../images/logo.jpg">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>{{username}}</title>
+  <link rel="shortcut icon" type="image/jpg" href="../images/logo.jpg">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -13,9 +13,18 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-	<link rel="stylesheet" type="text/css" href="../style/tag.css">
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../style/tag.css">
+  <link rel="stylesheet" type="text/css" href="style/contact.css">
+  <link rel="stylesheet" type="text/css" href="style/style.css">
+  <link rel="stylesheet" type="text/css" href="style/dashboard.css">
+  <script src="js/search.js"></script>
+  <script src="js/dashboard.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 	<script>
 	$(document).ready(function(){
@@ -461,8 +470,28 @@
 	}); 
 	</script> 
 </head>
-<body style="margin-top: 3%;">
-	<div class="container-fluid">
+<body>
+<div class="contain">
+<div class="container">
+  <nav class="nav navbar-custom">
+    <div class="container-fluid" id="heading">
+      <div class="nav navbar-header">
+        <nav class="navbar-brand"><a href="/"><img src="../images/logo.jpg" style="height:70px;width:70px;border-radius: 0%;"></a></nav>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/team">Team</a></li>
+        <li><a href="/tag" style="background: white;color: black;">Explore</a></li>
+        <li><a href="/">Dashboard</a></li>
+        <li><a href="/about">About Conectar</a></li>
+        <li><a href="/contact">Query</a></li>
+        <li><a href="/chat">Chat</a></li>
+        <li><a href="/users/logout">LogOut</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+</div>
+	<div class="container-fluid" style="margin-top: 2%;">
 		<div class="col-md-2" style="box-shadow:0 0 10px black;">
 			<table class="table">
 				<tr>
@@ -490,88 +519,206 @@
 			</table>
 		</div>
 		<div class="col-md-2">
+			<section>
 			<table class = "table Development" style="box-shadow:0 0 10px black;">
 				<tr>
-					<td><button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button></td>
+					<td>
+					<form action="/tagbtn" method="post">
+						<input type="submit" class="btn Web" name="tag" id="Development" value="Web Development" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+					</form>
+					</td>
 				</tr>
 				<tr>
-					<td><button id="Development" class="btn App" style="width: 100%;height: 100%; border-radius: 5px;">App Development</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn App" name="tag" id="Development" value="App Development" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 				<tr>
-					<td><button id="Development" class="btn Blockchain" style="width: 100%;height: 100%; border-radius: 5px;">Blockchain Development</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn Blockchain" name="tag" id="Development" value="Blockchain Development" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+						</td>
 				</tr>
 				<tr>
-					<td><button id="Development" class="btn Game" style="width: 100%;height: 100%; border-radius: 5px;">Game Development</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn Game" name="tag" id="Development" value="Game Development" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
 				</tr>
 			</table>
+		</section>
 			<table class = "table ai" style="box-shadow:0 0 10px black;">
 				<tr>
-					<td><button id="ai" class="btn aip" style="width: 100%;height: 100%; border-radius: 5px;">Artificial intelligence</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn aip" name="tag" id="ai" value="Artificial intelligence" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 					</tr>
 				<tr>
-					<td><button id="ai" class="btn arp" style="width: 100%;height: 100%; border-radius: 5px;">Automated reasoning</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn arp" name="tag" id="ai" value="Automated reasoning" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 					
 				</tr>
 				<tr>
-					<td><button id="ai" class="btn cvp" style="width: 100%;height: 100%; border-radius: 5px;">Computer vision</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn cvp" name="tag" id="ai" value="Computer Vision" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 				<tr>
-					<td><button id="ai" class="btn mlp" style="width: 100%;height: 100%; border-radius: 5px;">Machine learning</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn mlp" name="tag" id="ai" value="Machine Learning" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 				<tr>
-					<td><button id="ai" class="btn nlpp" style="width: 100%;height: 100%; border-radius: 5px;">Natural language processing</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn nlpp" name="tag" id="ai" value="Natural language processing" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 			</table>
 			<table class = "table comms" style="box-shadow:0 0 10px black;color: white;">
 				<tr>
-					<td><button id="comms" class="btn netp" style="width: 100%;height: 100%; border-radius: 5px;">Networking</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn netp" name="tag" id="comms" value="Networking" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 				<tr>
-					<td><button id="comms" class="btn csp" style="width: 100%;height: 100%; border-radius: 5px;">Computer security</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn csp" name="tag" id="comms" value="Computer Security" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 				<tr>
-					<td><button id="comms" class="btn cryp" style="width: 100%;height: 100%; border-radius: 5px;">Cryptography</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn cryp" name="tag" id="comms" value="Cryptography" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 				<tr>
-					<td><button id="comms" class="btn arcp" style="width: 100%;height: 100%; border-radius: 5px;">Computer architecture</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn arcp" name="tag" id="comms" value="Computer Architecture" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 				<tr>
-					<td><button id="comms" class="btn osp" style="width: 100%;height: 100%; border-radius: 5px;">Computer Operating systems</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn osp" name="tag" id="comms" value="Computer Operating systems" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 			</table>
 			<table class = "table mining" style="box-shadow:0 0 10px black;">
 				<tr>
-					<td><button id="mining" class="btn cgp" style="width: 100%;height: 100%; border-radius: 5px;">Computer graphics</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn cgp" name="tag" id="mining" value="Computer Graphics" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 					
 				</tr>
 				<tr>
-					<td><button id="mining" class="btn ipp" style="width: 100%;height: 100%; border-radius: 5px;">Image processing</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn ipp" name="tag" id="mining" value="Image processing" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 					
 				</tr>
 				<tr>
-					<td><button id="mining" class="btn ivp" style="width: 100%;height: 100%; border-radius: 5px;">Information visualization</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn ivp" name="tag" id="mining" value="Information visualization" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 					
 				</tr>
 				<tr>
-					<td><button id="mining" class="btn rp" style="width: 100%;height: 100%; border-radius: 5px;">Robotics</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn rp" name="tag" id="mining" value="Robotics" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 					
 				</tr>
 				<tr>
-					<td><button id="mining" class="btn dmp" style="width: 100%;height: 100%; border-radius: 5px;">Data mining</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn dmp" name="tag" id="mining" value="Data Mining" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 			</table>
 			<table class = "table computing" style="box-shadow:0 0 10px black;">
 				<tr>
-					<td><button id="computing" class="btn pcp" style="width: 100%;height: 100%; border-radius: 5px;">Parallel computing </button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn pcp" name="tag" id="computing" value="Parallel Computing" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 				<tr>
-					<td><button id="computing" class="btn cp" style="width: 100%;height: 100%; border-radius: 5px;"> Concurrency</button></td>
+					<td>
+
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn cp" name="tag" id="computing" value="Concurrency" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 				<tr>
-					<td><button id="computing" class="btn dcp" style="width: 100%;height: 100%; border-radius: 5px;">Distributed computing</button></td>
+					<td>
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn dcp" name="tag" id="computing" value="Distributed Computing" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 				<tr>
-					<td><button id="computing" class="btn rdp" style="width: 100%;height: 100%; border-radius: 5px;">Relational databases</button></td>
+					<td>
+
+						<form action="/tagbtn" method="post">
+						<input type="submit" class="btn rdp" name="tag" id="computing" value="Relational Databses" style="width: 100%;height: 100%; border-radius: 5px;">
+						<!--<button id="Development" class="btn Web" style="width: 100%;height: 100%; border-radius: 5px;">Web Development</button>-->
+						</form>
+					</td>
 				</tr>
 			</table>
 		</div>

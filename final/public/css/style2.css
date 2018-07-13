@@ -166,6 +166,7 @@ html, body, .main-container {
 {
 	line-height: 1.5;
 	color: white;
+	margin-right: 0.5em;
 	opacity: 1;
 	text-decoration: solid;
 	/*font-weight: 700;*/
@@ -173,8 +174,24 @@ html, body, .main-container {
 	font-family: Whitney Medium;
 	vertical-align: middle;
 	cursor: pointer;
-	/*display: inline-block;*/
+	display: inline-block;
 	font-size: 16px;
+}
+blockquote
+{
+	/*margin-bottom: 10px;*/
+	margin:0;
+	padding: 0 1em;
+    color:rgba(255,255,255,0.8);
+    border-left: 0.25em solid #dfe2e5;
+}
+.chat-time
+{
+	color:white;
+	font-family: Whitney;
+	font-size: 14px;
+	font-weight: lighter;
+	display: inline-block;
 }
 .chat-items
 {
@@ -278,12 +295,12 @@ html, body, .main-container {
 .material-icons.md-48 { font-size: 48px; }
 
 /* Rules for using icons as black on a light background. */
-.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
-.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+/* .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); } */
+/* .material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); } */
 
 /* Rules for using icons as white on a dark background. */
-/*.material-icons.md-light { color: rgba(255, 255, 255, 1); }*/
-/*.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }*/
+.material-icons.md-dark { color: rgba(255, 255, 255, 1); }
+.material-icons.md-dark.md-inactive { color: rgba(255, 255, 255, 0.3); }
 .navigation-icon
 {
 	-webkit-user-select: none;  /* Chrome all / Safari all */

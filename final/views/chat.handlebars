@@ -153,7 +153,7 @@
                 <div class="chat-model">
                 <span class="hint--top hint--rounded hint--small aside" aria-label="{[{x.name}]}"><img src="/img/avatar.png" width="30px" height="30px" class="avatar-img">
                 </span><div class="chat-items">
-                  <div class="chat-items-details">{[{x.name}]}</div><div class="chat-time"">{[{x.date}]} {[{x.time}]}</div>
+                  <div class="chat-items-details">{[{x.name}]}</div><span><div class="hint--top hint--rounded chat-time" aria-label="{[{x.date+' '+x.time}]}">{[{x.time.split(' ')[0].split(':')[0]+':'+x.time.split(' ')[0].split(':')[1]+' '+x.time.split(' ')[1]}]}</div></span>
                   <div class="message-text marked" ng-bind-html="markmsg(x.msg)"></div>
               </div>
             </div>

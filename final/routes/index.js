@@ -18,6 +18,61 @@ var present = '';
 var tags = '';
 var username = 'vishal260700';
 
+app.post('/tagbtn',function(req,res,next){
+  var item = {
+    tags : req.body.tag
+  };
+    // socket.join(username);
+    MongoClient.connect(url, function(err, client) {
+      if(err){
+        console.log("Error in seeing tags");
+      }
+      var messageS;
+      // console.log("Seeing tags of "+whosetags);  
+      var mydatabase=client.db("tagsldifjjs");
+      messageS=mydatabase.collection(req.body.tag);
+      messageS.insertMany([{people:req.user.username,like:0}]);
+    client.close();
+    });
+  const v=url;
+  mongo.connect(v, function(err, db) {
+    assert.equal(null, err);
+    const dbo = db.db(req.user.username);
+    dbo.collection(req.user.username).updateOne({"username":req.user.username},{$addToSet: item}, function(err, res) {
+      assert.equal(null, err);
+      console.log('Item updated');
+      db.close();
+    });
+  });
+});
+app.post('/tagsearch', function(req, res, next){
+  var results=[];
+  var tag = req.body.tag;
+  var username=req.user.username;
+    MongoClient.connect(url, function(err, client) {
+      if(err){
+        console.log("Error in seeing tags");
+      }
+      // console.log("Seeing tags of "+whosetags);  
+      var mydatabase=client.db("tagsldifjjs");
+      console.log("The tag is "+tag);
+      const messageS=mydatabase.collection(tag);
+      messageS.find({}).toArray(function(err,docs){
+        assert.equal(err,null);
+        // console.log(docs);
+        for(var x of docs)
+          results.push({username:x.people,about:"He has "+x.like,tag:tag});
+
+    client.close();
+
+    // console.log(results);
+    res.render('search',{
+      searchresults:results,searchfor : tag
+    });
+      });
+    });
+
+});
 app.get('/', ensureAuthenticated,function(req, res) {
 //   exports=module.exports=function(io){
 //   io.sockets.on('connection',function(socket){
@@ -146,7 +201,7 @@ app.post('/update2', function(req, res, next) {
 
 app.get('/tag',ensureAuthenticated,function(req,res){
   res.render('tagging',{
-    username : 'vishal260700'
+    username : req.user.username
   });//add the function of inserting data in the database collection following userschema
 });
 app.get('/team',ensureAuthenticated,function(req,res){

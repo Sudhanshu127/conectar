@@ -22,7 +22,7 @@ var users = require('./routes/users');
 
 // Init App
 var app = express();
-app.set('port', (process.env.PORT || 3000));
+app.set('port', (process.env.PORT || 2000));
 
 var server=app.listen(app.get('port'), function(){
   console.log('Server started on port '+app.get('port'));
@@ -314,6 +314,7 @@ socket.on('loveit',function(user,roome,loveme){
       var mydatabase=client.db(username);
       const messageS=mydatabase.collection(username);
       messageS.update({username:username},{$push:{friends:friend}});
+      messageS.deleteMany({type:"friendrequest",people:friend});
     socket.leave(username);
     client.close();
     });
@@ -332,7 +333,7 @@ socket.on('loveit',function(user,roome,loveme){
     });
 
   });
-  socket.on('friend request',function(username,friend){
+  socket.on('friend request',function(username,friend,tag){
     var url = "mongodb://"+ip+friend;
     socket.join(friend);
     MongoClient.connect(url, function(err, client) {
@@ -342,8 +343,8 @@ socket.on('loveit',function(user,roome,loveme){
       // console.log("Seeing tags of "+whosetags);  
       var mydatabase=client.db(friend);
       const messageS=mydatabase.collection(friend);
-      messageS.insertMany({type:"friendrequest",people:username});
-      socket.emit('got new friend requests',username);
+      messageS.insertMany([{type:"friendrequest",people:username,tag:tag}]);
+      socket.emit('got new friend requests',username,tag);
     socket.leave(friend);
     client.close();
     });
@@ -393,9 +394,13 @@ socket.on('loveit',function(user,roome,loveme){
       const messageS=mydatabase.collection(username);
       messageS.find({type:"friendrequest"}).toArray(function(err,docs){
         assert.equal(err,null);
+        // console.log("I got following requests"+docs[0].people);
         for(var x of docs)
-        io.sockets.in(username).emit("my friend request",x.people);
-
+        {
+          socket.emit("got new friend requests",x.people,x.tag);
+  console.log(x.people+x.tag);  
+        }
+        
     socket.leave(username);
     client.close();
       });
@@ -410,9 +415,11 @@ socket.on('loveit',function(user,roome,loveme){
       }
       // console.log("Seeing tags of "+whosetags);  
       var mydatabase=client.db("tagsldifjjs");
-      const messageS=mydatabase.collection("tag");
+      console.log(tag);
+      const messageS=mydatabase.collection(tag);
       messageS.find({}).toArray(function(err,docs){
         assert.equal(err,null);
+        console.log(docs);
         for(var x of docs)
         io.sockets.in(username).emit("searched people",x.people);
 
