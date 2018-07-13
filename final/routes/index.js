@@ -16,6 +16,8 @@ var mail = '';
 var designation = '';
 var present = '';
 var tags = '';
+var user_about = '';
+var name='';
 var username = 'vishal260700';
 
 app.post('/tagbtn',function(req,res,next){
@@ -74,60 +76,73 @@ app.post('/tagsearch', function(req, res, next){
 
 });
 app.get('/', ensureAuthenticated,function(req, res) {
-//   exports=module.exports=function(io){
-//   io.sockets.on('connection',function(socket){
-//     socket.emit('username',req.user.username);
-//   });
-// };
-  var v=url+req.user.username;
-MongoClient.connect(v, function(err, db) {
-  if (err) console.log("error recieved");
-  const dbo = db.db(req.user.username);
-  dbo.collection(req.user.username).findOne({}, function(err, result) {
-    if (err) console.log('Error detected');
-    try{
-      phone = result.phone;
-    }
-    catch(e){};
-    try
-    {
-      mail = result.mail;
-    }
-    catch(e){};
-    try
-    {
-      designation = result.designation;
-    }
-    catch(e){};
-    try
-    {
-      if(result.present)present = result.present;
-    }
-    catch(e){};
-    try{
-      tags = result.tags;
-    }
-    catch(e){};
-      res.render('dashboard',{
-      title : req.user.username,
-      username : req.user.username,
-      mail : mail,
-      phone : phone,
-      designation : designation,
-      cc : present,
-      t1: tags[0],
-      t2 : tags[1],
-      t3 : tags[2],
-      f1 : 'Vipul Shankhpal',
-      f2 : 'Ayush Soneria',
-      f3 : 'Sudhanshu Bansal',
-      f4 : 'Jayesh'
+  //   exports=module.exports=function(io){
+  //   io.sockets.on('connection',function(socket){
+  //     socket.emit('username',req.user.username);
+  //   });
+  // };
+    var v=url+req.user.username;
+  MongoClient.connect(v, function(err, db) {
+    if (err) console.log("error recieved");
+    const dbo = db.db(req.user.username);
+    dbo.collection(req.user.username).findOne({}, function(err, result) {
+      if (err) console.log('Error detected');
+      try{
+        if(result.phone)phone = result.phone;
+      }
+      catch(e){};
+      try{
+        if(result.name)name = result.name;
+      }
+      catch(e){
+        console.log('No name');
+      };
+      try
+      {
+        if(result.mail)mail = result.email;
+      }
+      catch(e){};
+      try
+      {
+        if(result.designation)designation = result.designation;
+      }
+      catch(e){};
+      try
+      {
+        if(result.present)present = result.present;
+      }
+      catch(e){};
+      try{
+        tags = result.tags;
+      }
+      catch(e){};
+      try
+      {
+        if(user_about)user_about = result.user_about;
+      }
+      catch(e){console.log('Lol about');};
+        res.render('dashboard',{
+        name:req.user.name,
+        // title : req.user.username,
+        username : req.user.username,
+        mail : mail,
+        user_about:user_about,
+        phone : phone,
+        designation : designation,
+        cc : present,
+        t1: tags[0],
+        t2 : tags[1],
+        t3 : tags[2],
+        f1 : 'Vipul Shankhpal',
+        f2 : 'Ayush Soneria',
+        f3 : 'Sudhanshu Bansal',
+        f4 : 'Jayesh'
+      });
+      // console.log(result);
+      db.close();
     });
-    console.log(result);
-    db.close();
   });
-});
-
+  
 });
 app.get('/user.json', function(req, res, next) {
   res.json({username: req.user.username});
@@ -135,7 +150,8 @@ app.get('/user.json', function(req, res, next) {
 app.post('/update', function(req, res, next) {
   var item = {
     phone : req.body.phone,
-    mail : req.body.mail,
+    email : req.body.mail,
+    user_about : req.body.user_about,
     designation : req.body.designation,
     present : req.body.cc
   };

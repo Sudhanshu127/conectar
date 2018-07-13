@@ -21,7 +21,7 @@ app.directive('schrollBottom', function () {
 
 
 
-app.controller('mainController',['$scope','$sce',function($scope,$sce){//Changed for trustasHTMl.
+app.controller('mainController',['$scope','$sce','$http',function($scope,$sce,$http){//Changed for trustasHTMl.
 console.log("app.js is working");
   var username;
   $http.get('/user.json').then(function(res) {
@@ -49,6 +49,7 @@ function run(){
   $scope.rightpanelToggle=false;
   socket.emit('getfriends',username);
   socket.on('the friends',function(friends){
+    console.log("Hey");
     $scope.friends=friends;
     $scope.$apply();
   });

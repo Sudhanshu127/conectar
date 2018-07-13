@@ -22,6 +22,7 @@ app.controller('mainController',['$scope','$http',function($scope,$http){
 	var friends=[];
 	socket.emit('getfriends',username);
 	socket.on('the friends',function(friends){
+		console.log("HI"+friends);
 		$scope.friends=friends;
 		$scope.$apply();
 	});
