@@ -11,6 +11,8 @@ app.controller('mainController',['$scope','$http',function($scope,$http){
     username=res.data.username;
     run();
 });
+$scope.friendrequestpanel=false;
+$scope.logout=false;
 	function run(){
 	var socket=io.connect();
 	// console.log(#{username});

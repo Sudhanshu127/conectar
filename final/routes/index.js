@@ -18,7 +18,7 @@ var present = '';
 var tags = '';
 var user_about = '';
 var name='';
-var username = 'vishal260700';
+var username="";
 
 app.post('/tagbtn',function(req,res,next){
   var item = {
@@ -142,7 +142,7 @@ app.get('/', ensureAuthenticated,function(req, res) {
       db.close();
     });
   });
-  
+
 });
 app.get('/user.json', function(req, res, next) {
   res.json({username: req.user.username});
