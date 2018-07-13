@@ -496,13 +496,13 @@
 		<span class="hint--bottom hint--rounded dropbtn" aria-label="Friend Requests" ng-click="friendrequestpanel=!friendrequestpanel"><i class="material-icons">people_outline</i></span>
 		<div class='beeper-nub'></div>
 		<div class="dropdown-content">
-			<div class="request">
+			<div class="request" ng-repeat="x in requests">
 				<img src="/images/avatar.png" height="48px" width="48px"/>
 				<div class="request-details vbox">
-					<span class="request-title">Jayesh N</span>
-					<span class="request-tag"><span class="tag">Web Dev</span></span>
+					<span class="request-title">[[x.username]]</span>
+					<span class="request-tag"><span class="tag">[[x.tag]]</span></span>
 				</div>
-				<div class="accept btn">Accept</div>
+				<div class="accept btn" ng-click="addfriend(x.username)";>Accept</div>
 			</div>
 		</div>
 	</div>

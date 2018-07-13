@@ -29,7 +29,7 @@
     </script>
   </head>
 
-  <body ng-controller="mainController" ng-init='submituser("Jayesh");' class="main-container vbox">
+  <body ng-controller="mainController" ng-init='submituser("{{username}}");' class="main-container vbox">
     
       <div class="header hbox" ng-class="{'leftpanel':panelToggle}">
         <div class="logo" ng-class="{'active':panelToggle===true}">
@@ -42,7 +42,7 @@
         <div class="chat-title_wrapper hbox">
         <div class="title-container">  
           <img src="/img/avatar.png" width="40px" height="40px" class="avatar-img-main">
-          <div class="chat-title">Sudhanshu</div>
+          <div class="chat-title">{[{roome}]}</div>
         </div>
           <div class="profile-buttons">
           <div class="favorite-button"><i class="material-icons md-dark md-inactive hint--rounded hint--small hint--bottom" ng-class="{'favorite':favorite}" aria-label="Favourite Sudhanshu" ng-click="loveit()" ng-model="love">star_border</i></div>
@@ -140,7 +140,9 @@
             </li>
             <li class="tab empty" ></li>
           </ul>
-          <div class="left-panel-content" ></div>
+          <div class="left-panel-content" >
+            <div class="conv-label" ng-repeat="x in friends track by $index" ng-click="submit(x);" style="position:relative"><img src="/images/avatar.png" height="22px" width="22px" style="border-radius:3px;padding-right:15px;z-index:99"> <span style="position:absolute">{[{x}]}</span></div>
+          </div>
         </div>
 
 

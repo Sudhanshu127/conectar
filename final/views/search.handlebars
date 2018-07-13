@@ -51,16 +51,28 @@
 		<a href="/"><img src="/images/logo.jpg" width="40px" height="40px" style="position: fixed;top:3px;left:calc(50% - 20px);"></a>
 	<div class="nav">
 		<div class="home-nav">
-		<a href="/"><span class="hint--bottom hint--rounded " aria-label="You have no unread notifications."><i class="material-icons">home</i></span></a>
+		<a href="/"><span class="hint--bottom hint--rounded " aria-label="Home"><i class="material-icons">home</i></span></a>
 		</div>
 			<div class="notification-nav">
 		<span class="hint--bottom hint--rounded " aria-label="You have no unread notifications."><i class="material-icons">notifications_none</i></span>
 	</div>
-	<div class="friend-nav">
-		<span class="hint--bottom hint--rounded " aria-label="Friend Requests"><i class="material-icons">people_outline</i></span>
+	<div class="dropdown" ng-class="{'friendpanel': friendrequestpanel}">
+		<span class="hint--bottom hint--rounded dropbtn" aria-label="Friend Requests" ng-click="friendrequestpanel=!friendrequestpanel"><i class="material-icons">people_outline</i></span>
+		<div class='beeper-nub'></div>
+		<div class="dropdown-content">
+			<div class="request" ng-repeat="x in requests">
+				<img src="/images/avatar.png" height="48px" width="48px"/>
+				<div class="request-details vbox">
+					<span class="request-title">[[x.username]]</span>
+					<span class="request-tag"><span class="tag">[[x.tag]]</span></span>
+				</div>
+				<div class="accept btn" ng-click="addfriend(x.username)";>Accept</div>
+			</div>
+		</div>
 	</div>
+	<a href="/chat">
 	<div class="chat-nav">
-			<span class="hint--bottom hint--rounded " aria-label="Chat"><i class="material-icons">chat</i></span>
+			<span class="hint--bottom hint--rounded " aria-label="Chat"><i class="material-icons">chat</i></span></a>
 	</div>
 
 	</div>
@@ -73,8 +85,12 @@
     <path d="M0 0h24v24H0z" fill="none"/>
 </svg></span>
 			</form>
-			<div class="header-profile">
+			<div class="header-profile dropdown-logout" ng-class="{'logout': logout}" ng-click="logout=!logout">
 				<img src="/images/avatar.png" width="32px" height="32px" style="cursor:pointer;border-radius: 3px;">
+				<div class='beeper-nub'></div>
+				<div class="dropdown-content-logout">
+					<a href="/users/logout"><div class="request-title">Log out</div></a>
+				</div>
 			</div>
 		</div>
 	</div>

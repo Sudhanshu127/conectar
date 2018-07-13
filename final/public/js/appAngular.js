@@ -21,7 +21,7 @@ $scope.logout=false;
 		$scope.tags=tags;
 		$scope.$apply();
 	});
-	var friends=[];
+	$scope.friends=[];
 	socket.emit('getfriends',username);
 	socket.on('the friends',function(friends){
 		$scope.friends=friends;
@@ -31,7 +31,7 @@ $scope.logout=false;
 	socket.emit('available friend request',username);
 	socket.on('got new friend requests',function(friend,tag){
 		console.log("YO");
-		$scope.requests.push([{username:friend,tag:tag}]);
+		$scope.requests.push({username:friend,tag:tag});
 		$scope.$apply();
 	});
 	socket.on('my friend request',function(friend,tag){
@@ -62,7 +62,9 @@ $scope.logout=false;
 	$scope.addfriend=function(friend){
 		socket.emit('add to friends',username,friend);
 		$scope.friends.push(friend);
+		console.log($scope.friends);
 		$scope.$apply();
+
 	};
 }
 }]);

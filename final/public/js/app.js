@@ -21,18 +21,20 @@ app.directive('schrollBottom', function () {
 
 
 
-app.controller('mainController',['$scope','$sce',function($scope,$sce){//Changed for trustasHTMl.
+app.controller('mainController',['$scope','$sce','$http',function($scope,$sce,$http){//Changed for trustasHTMl.
 console.log("app.js is working");
+	var user;
   var username;
   $http.get('/user.json').then(function(res) {
-    username=res.data.username;
+	username=res.data.username;
+	user=username;
     run();
 });
 function run(){
  var socket = io.connect();
  var roome;
  var preroome;
- var user;
+//  var user;
  var iWillBeTagged=[];
  var seeMytags;
  var group="group";
@@ -84,12 +86,8 @@ $scope.loveit=function(){
 	socket.emit('loveit',user,roome,$scope.love);
 }
 //Used to create a user id
- $scope.submituser=function(response){
- 	//socket.emit('user',response);
- 	$scope.You=response;
- 	user=response;
  	socket.emit('about me',user);
- }
+ 
 
  //Submit the user you want to talk too
  $scope.submit =function(response){

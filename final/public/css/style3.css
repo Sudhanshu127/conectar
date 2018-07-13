@@ -716,3 +716,27 @@ code {    overflow-x: auto;
 {
 	color: #f1c40f;
 }
+.left-panel .left-panel-content
+{
+	display: none;
+}
+.left-panel.active .left-panel-content
+{
+	padding-top: 10px;
+	display: block;
+	font-family: Whitney SemiBold;
+	color: rgba(255,255,255,0.85)
+}
+.left-panel.active .left-panel-content div
+{
+	/* text-align: center;	 */
+	padding:10px;
+}
+.conv-label
+{
+	cursor:pointer;
+}
+.conv-label:hover
+{
+	background-color: #403c3c;
+}
