@@ -96,6 +96,8 @@ $scope.loveit=function(){
  	//socket.emit('user',response);
  	$scope.You=response;
  }
+ 	// socket.emit('about me',user);
+ 
 
  //Submit the user you want to talk too
  $scope.submit =function(response){

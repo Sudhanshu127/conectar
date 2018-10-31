@@ -29,7 +29,8 @@
     </script>
   </head>
 
-  <body ng-controller="mainController" class="main-container vbox">
+  <!-- <body ng-controller="mainController" class="main-container vbox"> -->
+  <body ng-controller="mainController" ng-init='submituser("{{username}}");' class="main-container vbox">
     
       <div class="header hbox" ng-class="{'leftpanel':panelToggle}">
         <div class="logo" ng-class="{'active':panelToggle===true}">
@@ -141,7 +142,7 @@
             <li class="tab empty" ></li>
           </ul>
           <div class="left-panel-content" >
-            <div ng-repeat="x in friends track by $index" ng-click="submit(x)">{[{x}]}</div>
+            <div class="conv-label" ng-repeat="x in friends track by $index" ng-click="submit(x);" style="position:relative"><img src="/images/avatar.png" height="22px" width="22px" style="border-radius:3px;padding-right:15px;z-index:99"> <span style="position:absolute">{[{x}]}</span></div>
           </div>
         </div>
 

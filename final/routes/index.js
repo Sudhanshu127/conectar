@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
+const async=require('async');
 const path = require('path');
 const nodemailer = require('nodemailer');
 const app = express();
@@ -62,15 +63,50 @@ app.post('/tagsearch', function(req, res, next){
       messageS.find({}).toArray(function(err,docs){
         assert.equal(err,null);
         // console.log(docs);
-        for(var x of docs)
-          results.push({username:x.people,about:"He has "+x.like,tag:tag});
-
+        // for(var x of docs)
+        //   results.push({username:x.people,about:"He has "+x.like,tag:tag});
+          async.each(docs,function(usr,callback){
+            var abcd=url+usr;
+            mongo.connect(abcd,function(err,db2){
+              if(err) throw err;
+              var db123=db2.db(usr.people);
+              db123.collection(usr.people).findOne({},{fields: {'_id':0,'user_about':1,'tags':1}},function(err,reslt)
+              {
+                if (err) throw err;
+                    try
+                    {
+                      // console.log(result.user_about);
+                      if(reslt.user_about==null)
+                      {
+                        results.push({username:usr.people,tags:reslt.tags,like:usr.like,tag:tag});
+                      }
+                      else{
+                        results.push({username:usr.people,about:reslt.user_about,tags:reslt.tags,like:usr.like,tag:tag});
+                      }
+                      // results.push({username:result.username,about:user_about});
+                    }
+                    catch(e){}
+                    db2.close();
+                    callback();
+              });
+      
+            });
+          },function(err){
+            // All tasks are done now
+            // console.log(results);
+            res.render('search',{searchresults:results,
+              name:req.user.name,
+              searchfor:tag});
+          }
+        );
+      
+      
     client.close();
 
-    // console.log(results);
-    res.render('search',{
-      searchresults:results,searchfor : tag
-    });
+    // // console.log(results);
+    // res.render('search',{
+    //   searchresults:results,searchfor : tag
+    // });
       });
     });
 
@@ -257,16 +293,62 @@ app.set('view engine', 'handlebars');
 
 app.post('/send', (req, res) => {
   const output = `
-    <p>You have a new contact request</p>
-    <h3>Contact Details</h3>
-    <ul>  
-      <li>Name: ${req.body.name}</li>
-      <li>Company: ${req.body.company}</li>
-      <li>Email: ${req.body.email}</li>
-      <li>Phone: ${req.body.phone}</li>
-    </ul>
-    <h3>Message</h3>
-    <p>${req.body.message}</p>
+  <center>
+  <div style = "background:#EAFAF1;width:60%;">
+  <h3 style="font-size:40px;color: black;padding-top: 20px;">Contact Details</h3>
+  <style>
+    td{
+      padding : 10px;
+      width: 5%;
+      font-size:20px;
+    }
+  </style>
+<div style="background:#EAFAF1;">
+  <table style="padding-bottom:30px;padding-right: 10px;padding-left: 10px;">
+    <tr style="background: #EAEDED;">
+      <td>
+        Name
+      </td>
+      <td>
+        ${req.body.name}
+      </td>
+    </tr>
+    <tr style="background: white;">
+      <td>
+        Company
+      </td>
+      <td>
+        ${req.body.company}
+      </td>
+    </tr>
+    <tr style="background: #EAEDED;">
+      <td>
+        Mail Id
+      </td>
+      <td>
+        ${req.body.email}
+      </td>
+    </tr>
+    <tr style="background: white;">
+      <td>
+        Phone Number
+      </td>
+      <td>
+        ${req.body.phone}
+      </td>
+    </tr>
+    <tr style="background: #EAEDED;">
+      <td>
+        Message
+      </td>
+      <td>
+        ${req.body.message}
+      </td>
+    </tr>
+  </table>
+</div>
+</div>
+</center>
   `;
 
   // create reusable transporter object using the default SMTP transport

@@ -63,7 +63,9 @@ $scope.logout=false;
 	$scope.addfriend=function(friend){
 		socket.emit('add to friends',username,friend);
 		$scope.friends.push(friend);
+		console.log($scope.friends);
 		$scope.$apply();
+
 	};
 }
 }]);
